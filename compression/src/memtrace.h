@@ -57,8 +57,8 @@ namespace compression
 //    void __cdecl my_free(void* ptr);
 //}}}
 
-#define malloc(...) compression::detail::my_malloc(__VA_ARGS__)
-#define free(...) compression::detail::my_free(__VA_ARGS__)
+//#define malloc(...) ::compression::detail::my_malloc(__VA_ARGS__)
+//#define free(...) ::compression::detail::my_free(__VA_ARGS__)
 
 #define cudaMalloc(...) ::compression::detail::my_cudaMalloc(__VA_ARGS__)
 #define cudaMallocPitch(...) ::compression::detail::my_cudaMallocPitch(__VA_ARGS__)

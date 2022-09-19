@@ -276,8 +276,8 @@ void renderer::TransferFunctionPiecewiseLinear::computeTensor()
 		acc[0][i][4] = points[i].pos;
 	}
 	textureTensor_.value = textureTensorCpu_.to(c10::kCUDA);
-	textureTensor_.forwardIndex = {};
-	textureTensor_.grad = {};
+	//textureTensor_.forwardIndex = {};
+	//textureTensor_.grad = {};
 }
 
 double4 renderer::TransferFunctionPiecewiseLinear::evaluate(double density) const

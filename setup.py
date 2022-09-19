@@ -54,6 +54,7 @@ _include_dirs = [
     '%s/compression/src'%_root,
     '%s/imgui'%_root,
     '/usr/include',
+    '/home/qadwu/Software/glm',
 ]
 
 _libraries = [
