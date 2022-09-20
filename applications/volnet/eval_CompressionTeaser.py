@@ -58,31 +58,31 @@ configX = [
         base_resolution = 256,
         human_name="Richtmyer-Meshkov, T=60",
     ),
-    Config(
-        name = "skull",
-        settings = "config-files/skull-v6-dvr.json", #"neuraltextures/config-files/skull-v5-dvr.json",
-        base_resolution= 256,
-        human_name="Skull",
-    ),
-    Config(
-        name="ejecta1024",
-        settings="config-files/ejecta1024-v6-dvr.json",
-        base_resolution=1024,
-        human_name="Ejecta $1024^3",
-        overwrite_samples="1024**3",
-        overwrite_epochs=40,  # otherwise, it takes too long
-        overwrite_checkpoints=5,
-        overwrite_rebuild=21
-    ),
-    Config(
-        name = "jet",
-        settings = "config-files/LuBerger-Jet-v2-mc.json",
-        base_resolution= 512,
-        human_name="Jet",
-        overwrite_samples= "512**3",
-        num_refinement=31, #-> 32*8 = 256 samples per pixel
-        overwrite_epochs=100, # otherwise, it takes too long
-    )
+    # Config(
+    #     name = "skull",
+    #     settings = "config-files/skull-v6-dvr.json", #"neuraltextures/config-files/skull-v5-dvr.json",
+    #     base_resolution= 256,
+    #     human_name="Skull",
+    # ),
+    # Config(
+    #     name="ejecta1024",
+    #     settings="config-files/ejecta1024-v6-dvr.json",
+    #     base_resolution=1024,
+    #     human_name="Ejecta $1024^3",
+    #     overwrite_samples="1024**3",
+    #     overwrite_epochs=40,  # otherwise, it takes too long
+    #     overwrite_checkpoints=5,
+    #     overwrite_rebuild=21
+    # ),
+    # Config(
+    #     name = "jet",
+    #     settings = "config-files/LuBerger-Jet-v2-mc.json",
+    #     base_resolution= 512,
+    #     human_name="Jet",
+    #     overwrite_samples= "512**3",
+    #     num_refinement=31, #-> 32*8 = 256 samples per pixel
+    #     overwrite_epochs=100, # otherwise, it takes too long
+    # )
     ]
 
 RESULT_ONLYGRID = "OnlyGrid"
@@ -165,7 +165,7 @@ def findNetworkDimension(target_num_parameters, channels_last):
         layers = getLayerStr(num_channels)
         net = InnerNetwork(input_channels=3, output_channels=channels_last,
                            layers=layers, activation="ResidualSine",
-                           latent_size=0, split_density_and_auxiliary=False)
+                           latent_size=0) #, split_density_and_auxiliary=False)
         params = 0
         for p in net.parameters(recurse=True):
             params += p.numel()

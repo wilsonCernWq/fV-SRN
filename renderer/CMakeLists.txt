@@ -275,7 +275,8 @@ if(NOT ${RENDERER_ONLY_RESOURCES})
         # therefore, it is required on Unix to provide a custom source lodaer
         target_compile_definitions(${LIBRARY_NAME} PUBLIC 
             RENDERER_RUNTIME_COMPILATION=1
-            NVCC_ARGS="${RENDERER_NVCC_FLAGS}")
+            NVCC_ARGS="${RENDERER_NVCC_FLAGS}"
+            NVCC_INCLUDE_DIR=${CUDA_INCLUDE_DIRS})
     endif()
     
     # Shared or static

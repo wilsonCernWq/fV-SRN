@@ -11,7 +11,7 @@ cd ..
 
 echo Setup-Tools build
 python setup.py build
-cp build/lib.linux-x86_64-3.8/pyrenderer.cpython-38-x86_64-linux-gnu.so bin/
+cp build/lib.linux-x86_64-cpython-38/pyrenderer.cpython-38-x86_64-linux-gnu.so bin/
 
 echo Test
 cd bin

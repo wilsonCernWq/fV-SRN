@@ -55,7 +55,8 @@ _include_dirs = [
     '%s/imgui'%_root,
     '/usr/include',
     '/home/qadwu/Software/glm',
-    '/home/qadwu/Software/glm-0.9.9.8/glm'
+    '/home/qadwu/Software/glm-0.9.9.8/glm',
+    '/home/qadwu/Software/miniconda3/envs/proj-fvsrn/include'
 ]
 
 _libraries = [
