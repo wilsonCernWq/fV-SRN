@@ -367,7 +367,7 @@ if __name__ == '__main__':
     outdir = os.path.join(appdir, 'volnet/results/eval_CompressionTeaser/reconstruction/')
 
     # volume dimensions
-    X,Y,Z = 128, 128, 128
+    X,Y,Z = 256, 256, 256
     
     #test, example network trained in eval_VolumetricFeatures.py
     ln = LoadedModel(fn, force_config_file=cfn)
