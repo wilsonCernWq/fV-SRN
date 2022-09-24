@@ -18,6 +18,7 @@ import subprocess
 
 import common.utils as utils
 import pyrenderer
+import pdb
 
 from volnet.network import SceneRepresentationNetwork, InputParametrization
 from volnet.input_data import TrainingInputData
@@ -445,7 +446,7 @@ class LoadedModel:
         if camera is not None:
             image_evaluator.camera.set_parameters(camera)
         if stepsize_world is not None and isinstance(image_evaluator.ray_evaluator, pyrenderer.IRayEvaluationStepping):
-            image_evaluator.ray_evaluator.stepsizeIsObjectSpace = False
+            # image_evaluator.ray_evaluator.stepsizeIsObjectSpace = False
             image_evaluator.ray_evaluator.stepsize = stepsize_world
         if timer is not None:
             timer.start()
@@ -584,6 +585,7 @@ class LoadedModel:
                         network, camera, self._image_evaluator.ray_evaluator.tf, is_half, network_args=network_args)
                 if num_refine>0:
                     print("Output max:", torch.max(output[0,:4].reshape(4,-1), dim=1)[0])
+                output = output.repeat(1,2,1,1) # Qi's hack ...
                 output = self._image_evaluator.extract_color(output)
             else:
                 image_evaluator, actual_timestep, actual_ensemble = self._input_data.image_evaluator(
@@ -593,14 +595,14 @@ class LoadedModel:
                 # save old
                 old_volume = image_evaluator.volume
                 if isinstance(ray_evaluator, pyrenderer.IRayEvaluationStepping):
-                    old_stepsizeIsObjectSpace = image_evaluator.ray_evaluator.stepsizeIsObjectSpace
+                    # old_stepsizeIsObjectSpace = image_evaluator.ray_evaluator.stepsizeIsObjectSpace
                     old_stepsize = image_evaluator.ray_evaluator.stepsize
                 # set new
                 image_evaluator.volume = self._volume_network
                 #print("Old box: min=%s, max=%s"%(old_volume.box_min(), old_volume.box_max()))
                 #print("New box: min=%s, max=%s" % (self._volume_network.box_min(), self._volume_network.box_max()))
                 if isinstance(ray_evaluator, pyrenderer.IRayEvaluationStepping):
-                    ray_evaluator.stepsizeIsObjectSpace = False
+                    # ray_evaluator.stepsizeIsObjectSpace = False
                     ray_evaluator.stepsize = stepsize
                 self._scene_network.set_time_and_ensemble(orig_timestep, orig_ensemble)
                 if camera is not None:
@@ -613,7 +615,7 @@ class LoadedModel:
                 # restore
                 image_evaluator.volume = old_volume # reset
                 if isinstance(ray_evaluator, pyrenderer.IRayEvaluationStepping):
-                    ray_evaluator.stepsizeIsObjectSpace = old_stepsizeIsObjectSpace
+                    # ray_evaluator.stepsizeIsObjectSpace = old_stepsizeIsObjectSpace
                     ray_evaluator.stepsize = old_stepsize
                 # extract color and return
                 if num_refine>0:
