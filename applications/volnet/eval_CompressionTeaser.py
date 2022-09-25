@@ -58,12 +58,12 @@ configX = [
         base_resolution = 256,
         human_name="Richtmyer-Meshkov, T=60",
     ),
-    # Config(
-    #     name = "skull",
-    #     settings = "config-files/skull-v6-dvr.json", #"neuraltextures/config-files/skull-v5-dvr.json",
-    #     base_resolution= 256,
-    #     human_name="Skull",
-    # ),
+    Config(
+        name = "skull",
+        settings = "config-files/skull-v6-dvr.json", #"neuraltextures/config-files/skull-v5-dvr.json",
+        base_resolution= 256,
+        human_name="Skull",
+    ),
     # Config(
     #     name="ejecta1024",
     #     settings="config-files/ejecta1024-v6-dvr.json",
