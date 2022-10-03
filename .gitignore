@@ -22,7 +22,9 @@ build/
 # Results
 *.pygstyle
 *.pygtex
+/applications/kernel_cache/
 /applications/volnet/cache/
 /applications/volnet/results/
+/applications/volnet/results*/
 *mc-cache.hdf5
 /applications/test-*.png

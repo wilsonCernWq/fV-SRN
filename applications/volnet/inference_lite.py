@@ -4,7 +4,7 @@ Inference: loads models from hdf5-files and renders them
 
 import sys
 import os
-sys.path.append(f'{os.getcwd()}/..') # Hotfix for pymodule issues
+sys.path.append(f'{os.getcwd()}') # Hotfix for pymodule issues
 
 import numpy as np
 import torch
@@ -17,11 +17,13 @@ import collections
 from functools import lru_cache
 import logging
 import subprocess
+import pdb
 
 from volnet.network import SceneRepresentationNetwork, InputParametrization
 from volnet.input_data import TrainingInputData
 from volnet.raytracing import Raytracing
 
+# os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 class LoadedModel:
     """
@@ -356,18 +358,34 @@ class LoadedModel:
 
 if __name__ == '__main__':
 
+    # args
+    if len(sys.argv) < 5:
+        print('Provide a result name and x,y,z dimensions')
+        sys.exit(-1)
+
+    # result
+    result = sys.argv[1]
+
+    # volume dimensions
+    X = int(sys.argv[2])
+    Y = int(sys.argv[3])
+    Z = int(sys.argv[4])
+
     # app dir
     appdir = '/home/qadwu/Work/fV-SRN/applications/'
 
     # file name
-    fn = os.path.join(appdir,'volnet/results/eval_CompressionTeaser/hdf5/rm60-Hybrid.hdf5')
-    cfn = os.path.join(appdir, 'config-files/RichtmyerMeshkov-t60-v1-dvr.json')
+    fn = os.path.join(appdir,f'volnet/results/{result}/hdf5/run00001.hdf5')
+    #fn = '/home/qadwu/Work/fV-SRN/applications/volnet/results/eval_CompressionTeaser/hdf5/rm60-OnlyNetwork.hdf5'
+
+    cfn = os.path.join(appdir, f'config-files/instant-vnr/{result}.json')
+    #cfn = '/home/qadwu/Work/fV-SRN/applications/config-files/RichtmyerMeshkov-t60-v1-dvr.json'
 
     # out dir
-    outdir = os.path.join(appdir, 'volnet/results/eval_CompressionTeaser/reconstruction/')
-
-    # volume dimensions
-    X,Y,Z = 256, 256, 256
+    outdir = os.path.join(appdir, f'volnet/results/{result}/reconstruction/')
+    #outdir = '/home/qadwu/Work/fV-SRN/applications/volnet/results/eval_CompressionTeaser/reconstruction'
+    if not os.path.exists(outdir):
+        os.makedirs(outdir)
     
     #test, example network trained in eval_VolumetricFeatures.py
     ln = LoadedModel(fn, force_config_file=cfn)
@@ -382,16 +400,23 @@ if __name__ == '__main__':
     linx = torch.linspace(0,1,X, dtype=ln._dtype, device=ln._device)
     liny = torch.linspace(0,1,Y, dtype=ln._dtype, device=ln._device)
     linz = torch.linspace(0,1,Z, dtype=ln._dtype, device=ln._device)
-    positions = torch.stack(torch.meshgrid(linx,liny,linz), dim=-1).reshape(N, 3)
-    points_torch32 = ln.evaluate(positions, LoadedModel.EvaluationMode.PYTORCH32, tf=tf, timestep=time, ensemble=ensemble)
-    points_torch16 = ln.evaluate(positions, LoadedModel.EvaluationMode.PYTORCH16, tf=tf, timestep=time, ensemble=ensemble)
+    # positions = torch.stack(torch.meshgrid(linz,liny,linx), dim=-1).reshape(N, 3)
+    positions = torch.stack(torch.meshgrid(linx,liny,linz), dim=-1).permute(2, 1, 0, 3).reshape(N, 3)
+    # pdb.set_trace()
+    points_torch32 = torch.zeros((N,1))
+    points_torch16 = torch.zeros((N,1))
+    stride = 256*256
+    for offset in range(0, N, stride):
+        end = min(offset+stride, N)
+        points_torch32[offset:end] = ln.evaluate(positions[offset:end], LoadedModel.EvaluationMode.PYTORCH32, tf=tf, timestep=time, ensemble=ensemble)
+        points_torch16[offset:end] = ln.evaluate(positions[offset:end], LoadedModel.EvaluationMode.PYTORCH16, tf=tf, timestep=time, ensemble=ensemble)
 
     print("Shape:", points_torch32.shape)
     print("Difference torch32-torch16:", F.mse_loss(points_torch32, points_torch16).item())
 
     print("Saving outputs")
-    points_torch32.cpu().numpy().astype(np.float32).tofile(os.path.join(outdir, f'points_{X}x{Y}x{Z}_fp32.bin'))
-    points_torch16.cpu().numpy().astype(np.float16).tofile(os.path.join(outdir, f'points_{X}x{Y}x{Z}_fp16.bin'))
+    points_torch32.cpu().numpy().astype(np.float32).tofile(os.path.join(outdir, f'points_{X}x{Y}x{Z}_fp32.raw'))
+    points_torch16.cpu().numpy().astype(np.float16).tofile(os.path.join(outdir, f'points_{X}x{Y}x{Z}_fp16.raw'))
 
 
     print("Done")
