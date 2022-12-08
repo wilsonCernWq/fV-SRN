@@ -2,7 +2,7 @@
 
 # ONLY NETWORK TRAINING
 python volnet/train_volnet.py \
-   /home/qadwu/Work/fV-SRN/applications/config-files/instant-vnr/$1.json \
+   $PWD/config-files/instant-vnr/$1.json \
    --train:mode world \
    --train:samples 256**3 \
    --train:sampler_importance 0.01 \
