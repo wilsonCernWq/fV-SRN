@@ -1,0 +1,68 @@
+16 implicit functions loaded
+Load volume "/media/data/qadwu/floats/1atm_heatrelease_1152x320x853_float32_raw_1152x320x853_float.cvol"
+Load feature 0
+Loaded
+fatal: Not a valid commit name 59fc3010267a00d111a16bce591fd6a0e7cd6c8b
+Search pyrenderer in '/home/qadwu/Work/fV-SRN/bin'
+pyrenderer native library loaded
+Load network from /home/qadwu/Work/fV-SRN/applications/volnet/results/heatrelease_1atm_256/hdf5/run00001.hdf5
+Load settings from /home/qadwu/Work/fV-SRN/applications/config-files/instant-vnr/heatrelease_1atm.json
+Based on the git-commit of the checkpoint, it is a old network
+Latent space memory: 0.0B
+Latent space memory: 0.0B
+Loaded, output mode: density:direct
+Shape: torch.Size([314449920, 1])
+Difference torch32-torch16: 7.024678779998794e-05
+Saving outputs
+Done
+16 implicit functions loaded
+Load volume "/media/data/qadwu/floats/10atm_heatrelease_1152x426x853_float32_raw_1152x426x853_float.cvol"
+Load feature 0
+Loaded
+fatal: Not a valid commit name 59fc3010267a00d111a16bce591fd6a0e7cd6c8b
+Search pyrenderer in '/home/qadwu/Work/fV-SRN/bin'
+pyrenderer native library loaded
+Load network from /home/qadwu/Work/fV-SRN/applications/volnet/results/heatrelease_10atm_256/hdf5/run00001.hdf5
+Load settings from /home/qadwu/Work/fV-SRN/applications/config-files/instant-vnr/heatrelease_10atm.json
+Based on the git-commit of the checkpoint, it is a old network
+Latent space memory: 0.0B
+Latent space memory: 0.0B
+Loaded, output mode: density:direct
+Shape: torch.Size([418611456, 1])
+Difference torch32-torch16: 9.476353443460539e-05
+Saving outputs
+Done
+16 implicit functions loaded
+Load volume "/media/data/qadwu/floats/mechhand_640x220x229_float32_raw_640x220x229_float.cvol"
+Load feature 0
+Loaded
+fatal: Not a valid commit name 59fc3010267a00d111a16bce591fd6a0e7cd6c8b
+Search pyrenderer in '/home/qadwu/Work/fV-SRN/bin'
+pyrenderer native library loaded
+Load network from /home/qadwu/Work/fV-SRN/applications/volnet/results/mechhand_256/hdf5/run00001.hdf5
+Load settings from /home/qadwu/Work/fV-SRN/applications/config-files/instant-vnr/mechhand.json
+Based on the git-commit of the checkpoint, it is a old network
+Latent space memory: 0.0B
+Latent space memory: 0.0B
+Loaded, output mode: density:direct
+Shape: torch.Size([32243200, 1])
+Difference torch32-torch16: 1.588136365171522e-05
+Saving outputs
+Done
+16 implicit functions loaded
+Load volume "/media/data/qadwu/floats/chameleon_1024x1024x1080_float32_raw_1024x1024x1080_float.cvol"
+Load feature 0
+Loaded
+fatal: Not a valid commit name 59fc3010267a00d111a16bce591fd6a0e7cd6c8b
+Search pyrenderer in '/home/qadwu/Work/fV-SRN/bin'
+pyrenderer native library loaded
+Load network from /home/qadwu/Work/fV-SRN/applications/volnet/results/chameleon_256/hdf5/run00001.hdf5
+Load settings from /home/qadwu/Work/fV-SRN/applications/config-files/instant-vnr/chameleon.json
+Based on the git-commit of the checkpoint, it is a old network
+Latent space memory: 0.0B
+Latent space memory: 0.0B
+Loaded, output mode: density:direct
+Traceback (most recent call last):
+  File "volnet/inference_lite.py", line 404, in <module>
+    positions = torch.stack(torch.meshgrid(linx,liny,linz), dim=-1).permute(2, 1, 0, 3).reshape(N, 3)
+RuntimeError: CUDA out of memory. Tried to allocate 12.66 GiB (GPU 0; 23.65 GiB total capacity; 12.66 GiB already allocated; 5.79 GiB free; 12.66 GiB reserved in total by PyTorch)

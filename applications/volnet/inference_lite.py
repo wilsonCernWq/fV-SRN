@@ -375,18 +375,18 @@ if __name__ == '__main__':
     appdir = '/home/qadwu/Work/fV-SRN/applications/'
 
     # file name
-    fn = os.path.join(appdir,f'volnet/results/{result}/hdf5/run00001.hdf5')
+    fn = os.path.join(appdir,f'volnet/results/{result}_256/hdf5/run00001.hdf5')
     #fn = '/home/qadwu/Work/fV-SRN/applications/volnet/results/eval_CompressionTeaser/hdf5/rm60-OnlyNetwork.hdf5'
 
     cfn = os.path.join(appdir, f'config-files/instant-vnr/{result}.json')
     #cfn = '/home/qadwu/Work/fV-SRN/applications/config-files/RichtmyerMeshkov-t60-v1-dvr.json'
 
     # out dir
-    outdir = os.path.join(appdir, f'volnet/results/{result}/reconstruction/')
+    outdir = os.path.join(appdir, f'volnet/results/{result}_256/reconstruction/')
     #outdir = '/home/qadwu/Work/fV-SRN/applications/volnet/results/eval_CompressionTeaser/reconstruction'
     if not os.path.exists(outdir):
         os.makedirs(outdir)
-    
+
     #test, example network trained in eval_VolumetricFeatures.py
     ln = LoadedModel(fn, force_config_file=cfn)
     num_refine = 0
