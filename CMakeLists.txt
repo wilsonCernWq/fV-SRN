@@ -5,10 +5,6 @@ cmake_policy(SET CMP0074 NEW) # use _ROOT environment variables
 cmake_policy(SET CMP0091 NEW) # set runtime library
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
-add_definitions(-D_GLIBCXX_USE_CXX11_ABI=0)
-
 ####################################
 # MAIN OPTIONS
 ####################################
@@ -45,8 +41,7 @@ if(COMMAND CUDA_SELECT_NVCC_ARCH_FLAGS)
 	LIST(APPEND CUDA_NVCC_FLAGS "${ARCH_FLAGS2}")
 	message(STATUS "cuda flags: ${ARCH_FLAGS2}")
 endif()
-#list(APPEND CUDA_NVCC_FLAGS "-std=c++17" "--use_fast_math" "--generate-line-info" "--ptxas-options=-v")
-list(APPEND CUDA_NVCC_FLAGS "-std=c++17" "--use_fast_math")
+list(APPEND CUDA_NVCC_FLAGS "-std=c++17" "--use_fast_math" "--generate-line-info" "-Xptxas" "-v")
 set(MY_CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS})
 set(CUDA_SEPARABLE_COMPILATION ON)
 message(STATUS "final cuda flags: ${CMAKE_CUDA_FLAGS}")
@@ -106,10 +101,6 @@ endif()
 ####################################
 # Pytorch
 ####################################
-
-## https://blog.csdn.net/xzq1207105685/article/details/117400187
-#find_package(PythonInterp REQUIRED)
-#find_package(Torch REQUIRED)
   
 if(NOT ${RENDERER_ONLY_RESOURCES})
     # find installation path
@@ -154,11 +145,6 @@ if(NOT ${RENDERER_ONLY_RESOURCES})
     set(TORCH_INCLUDE_DIR "${TORCH_PATH}/include;${TORCH_PATH}/include/torch/csrc/api/include" CACHE FILEPATH "include directory for the pytorch headers")
     message(STATUS "Torch: include directories: ${TORCH_INCLUDE_DIR}")
 endif()
-
-#set(TORCH_SHARED_LIBRARIES ${TORCH_LIBRARIES})
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
-#message(STATUS "Torch: shared libraries to copy: ${TORCH_LIBRARIES}")
-#message(STATUS "Torch: shared libraries to copy: ${TORCH_SHARED_LIBRARIES}")
 
 ####################################
 # THIRD PARTY
