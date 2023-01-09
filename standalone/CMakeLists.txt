@@ -60,8 +60,10 @@ add_definitions(-DCUMAT_SINGLE_THREAD_CONTEXT=1 -DTHRUST_IGNORE_CUB_VERSION_CHEC
 ####################################
 
 set(TEST_FILES 
-	testSRNKernel.cu
-	# mainSRNKernel.cu
+	# testSRNKernel.cu
+	mainSRNKernel.cu
+
+	volume_interpolation_network.cu
 )
 
 set(TEST_NAME standalone CACHE INTERNAL "target name for the tests")
@@ -79,6 +81,7 @@ target_include_directories(${TEST_NAME} PRIVATE
 )
 target_link_libraries(${TEST_NAME}
 	${CUDA_LIBRARIES}
+	cuda cudadevrt
 )
 set_property(TARGET ${TEST_NAME} PROPERTY CXX_STANDARD 17)
 target_compile_definitions(${TEST_NAME} PRIVATE CUMAT_EIGEN_SUPPORT=1)
