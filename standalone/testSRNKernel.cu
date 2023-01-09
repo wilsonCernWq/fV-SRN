@@ -25,7 +25,7 @@
 #define BLOCK_SIZE 512
 #define NUM_HIDDEN_LAYERS 0
 #define HIDDEN_CHANNELS_DIV16 2
-#define HAS_FOURIER_FEATURES 0
+#define HAS_FOURIER_FEATURES 1
 #define NUM_FOURIER_FEATURES ((HIDDEN_CHANNELS_DIV16*16-4)/2)
 #define ACTIVATION ReLU
 
@@ -520,14 +520,11 @@ int main()
 	CUMAT_SAFE_CALL(cudaMemcpyToSymbol(volumeInterpolationTensorcoresParameters,
 		&p, sizeof(VolumeInterpolationTensorcoresParameters)));
 
-	//launch kernel
 	CUMAT_SAFE_CALL(cudaDeviceSynchronize());
-	// MY_INFO("Launch");
 
 	SRNTestKernel<<<1, BLOCK_SIZE>>>();
 
 	CUMAT_SAFE_CALL(cudaDeviceSynchronize());
-	// MY_INFO("Complete");
 
 	return 0;
 }

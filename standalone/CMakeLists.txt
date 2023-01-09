@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
+project(StandAlone LANGUAGES C CXX CUDA)
 
 cmake_policy(SET CMP0074 NEW) # use _ROOT environment variables
 cmake_policy(SET CMP0091 NEW) # set runtime library
@@ -59,8 +60,8 @@ add_definitions(-DCUMAT_SINGLE_THREAD_CONTEXT=1 -DTHRUST_IGNORE_CUB_VERSION_CHEC
 ####################################
 
 set(TEST_FILES 
-	# testSRNKernel.cu
-	mainSRNKernel.cu
+	testSRNKernel.cu
+	# mainSRNKernel.cu
 )
 
 set(TEST_NAME standalone CACHE INTERNAL "target name for the tests")
@@ -80,6 +81,11 @@ target_link_libraries(${TEST_NAME}
 	${CUDA_LIBRARIES}
 )
 set_property(TARGET ${TEST_NAME} PROPERTY CXX_STANDARD 17)
-set_property(TARGET ${TEST_NAME} PROPERTY CUDA_ARCHITECTURES 72)
 target_compile_definitions(${TEST_NAME} PRIVATE CUMAT_EIGEN_SUPPORT=1)
 target_compile_options(${TEST_NAME} PRIVATE $<$<COMPILE_LANGUAGE:CUDA>:${CUDA_NVCC_FLAGS}>)
+set_target_properties(${TEST_NAME} 
+PROPERTIES 
+  CUDA_STANDARD 17
+  CUDA_RESOLVE_DEVICE_SYMBOLS ON
+  CUDA_SEPARABLE_COMPILATION ON
+)
