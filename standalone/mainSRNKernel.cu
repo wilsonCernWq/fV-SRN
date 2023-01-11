@@ -85,15 +85,16 @@ typedef kernel::VolumeInterpolationTensorcores VolumeInterpolationTensorcores;
 __global__ void SRNTestKernel()
 {
 	int idx = threadIdx.x + blockDim.x * blockIdx.x;
+	int tot = blockDim.x * gridDim.x;
+
 	VolumeInterpolationTensorcores srn;
 #if OUTPUT_IS_COLOR==1
 	auto out = srn.eval<real4>(make_real2(idx, 0, 0), dummy_direction, 0);
 	printf("[%04d] -> r=%.4f, g=%.4f, b=%.4f, a=%.4f\n",
 		idx, out.value.x, out.value.y, out.value.z, out.value.w);
 #else
-	auto out = srn.eval<real_t>(make_real3(idx, 0, 0), dummy_direction, 0);
-	printf("[%04d] -> d=%.4f\n",
-		idx, out.value);
+	auto out = srn.eval<real_t>(make_real3(idx/(float)tot, 0, 0), dummy_direction, 0);
+	printf("[%04d] -> d=%.4f\n", idx, out.value);
 #endif
 }
 
@@ -135,17 +136,16 @@ int main()
 	renderer::VolumeInterpolationNetwork net;
 	net.loadNetwork("/home/qadwu/Work/fV-SRN/applications/volnet/results/eval_CompressionTeaser/hdf5/rm60-Hybrid.volnet");
 
-	// GlobalSettings s{};
+	renderer::GlobalSettings s{};
 	// s.scalarType = positions.scalar_type();
-	// s.volumeShouldProvideNormals = false;
-	// s.interpolationInObjectSpace = false;
+	s.volumeShouldProvideNormals = false;
+	s.interpolationInObjectSpace = false;
 	// const auto oldBoxMax = boxMax();
 	// const auto oldBoxMin = boxMin();
 	net.setBoxMin(make_double3(0, 0, 0));
 	net.setBoxMax(make_double3(1, 1, 1));
 	// int channels = outputChannels();
 
-	renderer::GlobalSettings s;
 	net.prepareRendering(s);
 
 	std::cout << net.getDefines(s) << std::endl;
@@ -165,6 +165,38 @@ int main()
 	SRNTestKernel<<<1, BLOCK_SIZE>>>();
 
 	CUMAT_SAFE_CALL(cudaDeviceSynchronize());
+
+	// //launch kernel
+	// int blockSize;
+	// if (s.fixedBlockSize>0)
+	// {
+	// 	if (s.fixedBlockSize > fun.bestBlockSize())
+	// 		throw std::runtime_error("larger block size requested that can be fulfilled");
+	// 	blockSize = s.fixedBlockSize;
+	// } else
+	// {
+	// 	blockSize = fun.bestBlockSize();
+	// }
+	// int minGridSize = std::min(
+	// 	int(CUMAT_DIV_UP(batches, blockSize)),
+	// 	fun.minGridSize());
+	// dim3 virtual_size{
+	// 	static_cast<unsigned int>(batches), 1, 1 };
+	// bool success = RENDERER_DISPATCH_FLOATING_TYPES(s.scalarType, "IVolumeInterpolation::evaluate", [&]()
+	// 	{
+	// 		const auto accPosition = accessor< ::kernel::Tensor2Read<scalar_t>>(positions);
+	// 		const auto accDirection = hasDirection
+	// 			? accessor< ::kernel::Tensor2Read<scalar_t>>(direction)
+	// 			: ::kernel::Tensor2Read<scalar_t>();
+	// 		const auto accDensity = accessor< ::kernel::Tensor2RW<scalar_t>>(densities);
+	// 		const void* args[] = { &virtual_size, &accPosition, &accDirection, &accDensity };
+	// 		auto result = cuLaunchKernel(
+	// 			fun.fun(), minGridSize, 1, 1, blockSize, 1, 1,
+	// 			0, stream, const_cast<void**>(args), NULL);
+	// 		if (result != CUDA_SUCCESS)
+	// 			return printError(result, kernelName);
+	// 		return true;
+	// 	});
 
 	return 0;
 }
