@@ -531,7 +531,7 @@ private:
 	float3 boxMin_;
 	float3 boxSize_;
 
-	//GPU cache
+	// GPU cache
 	mutable std::vector<char> cacheConstantMemory_;
 	mutable std::string cacheDefines_;
 	mutable int cacheNumWarps_ = -1;
@@ -817,10 +817,10 @@ public:
 	int getCurrentNumWarps() const;
 
 	void setTimeAndEnsemble(float time, int ensemble);
-protected:
+// protected:
+public:
     void setBoxMin(const double3& boxMin) ;
     void setBoxMax(const double3& boxMax) ;
-public:
     [[nodiscard]] std::string getName() const ;
 	// [[nodiscard]] bool drawUI(UIStorage_t& storage) ;
 	// void load(const nlohmann::json& json, const ILoadingContext* fetcher) ;

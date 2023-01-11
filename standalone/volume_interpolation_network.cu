@@ -1,6 +1,6 @@
 #include "volume_interpolation_network.h"
 
-#include <magic_enum.hpp>
+// #include <magic_enum.hpp>
 
 #include <cuMat/src/Errors.h>
 
@@ -42,7 +42,7 @@ static std::string loadString(std::istream& i)
 	i.read(reinterpret_cast<char*>(&l), sizeof(int));
 	std::string s;
 	s.resize(l);
-	i.read(s.data(), l);
+	i.read((char*)s.data(), l);
 	return s;
 }
 
@@ -671,11 +671,7 @@ bool renderer::LatentGridTimeAndEnsemble::isValid() const
 		{
 			if (encoding != g->encoding)
 			{
-				std::cerr << "All latent grids must share the same encoding modes, but this grid uses " <<
-					"XXX" // magic_enum::enum_name(g->encoding) 
-					<< ", while previous grids used " <<
-					"XXX" // magic_enum::enum_name(encoding) 
-					<< std::endl;
+				std::cerr << "All latent grids must share the same encoding modes" << std::endl;
 				return false;
 			}
 		}
@@ -695,11 +691,7 @@ bool renderer::LatentGridTimeAndEnsemble::isValid() const
 		{
 			if (encoding != g->encoding)
 			{
-				std::cerr << "All latent grids must share the same encoding modes, but this grid uses " <<
-					"XXX" // magic_enum::enum_name(g->encoding) 
-					<< ", while previous grids used " <<
-					"XXX" // magic_enum::enum_name(encoding) 
-					<< std::endl;
+				std::cerr << "All latent grids must share the same encoding modes" << std::endl;
 				return false;
 			}
 		}
@@ -1439,9 +1431,7 @@ void renderer::SceneNetwork::fillConstantMemory(
 }
 
 renderer::VolumeInterpolationNetwork::VolumeInterpolationNetwork()
-	: // IVolumeInterpolation(false)
-	// , 
-	selectedNetwork_(0)
+	: selectedNetwork_(0)
 	, gradientMode_(SceneNetwork::GradientMode::OFF_OR_DIRECT)
 	, finiteDifferencesStepsize_(1/256.f)
     , adjointLatentGridCentralDifferencesStepsizeScale_(4)
@@ -1722,7 +1712,7 @@ int renderer::VolumeInterpolationNetwork::getCurrentNumWarps() const
 
 void renderer::VolumeInterpolationNetwork::prepareRendering(GlobalSettings& s) const
 {
-	prepareRendering(s);
+	// prepareRendering(s);
 	if (networks_.empty())
 		throw std::runtime_error("No network specified!");
 

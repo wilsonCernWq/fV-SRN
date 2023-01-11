@@ -11,6 +11,8 @@
 #include <tinyformat.h>
 #include <third-party/Eigen/Core> // in cuMat
 
+#include "volume_interpolation_network.h"
+
 // ------------- some definitions --------------- //
 
 #define OUTPUT_MODE_DENSITY 0                  // real_t output
@@ -33,19 +35,33 @@
 
 // ------------- config --------------- //
 
-#define BLOCK_SIZE 512
-#define NUM_HIDDEN_LAYERS 0
+// #define BLOCK_SIZE 512
+// #define NUM_HIDDEN_LAYERS 0
+// #define HIDDEN_CHANNELS_DIV16 2
+// #define HAS_FOURIER_FEATURES 1
+// #define NUM_FOURIER_FEATURES ((HIDDEN_CHANNELS_DIV16*16-4)/2)
+// #define USE_DIRECTION 0 
+// #define ACTIVATION ReLU
+// #define OUTPUT_MODE OUTPUT_MODE_DENSITY
+// #define FIRST_AND_LAST_IN_SHARED_MEMORY 0
+// #define LATENT_GRID_CHANNELS_DIV16 1
+// #define LATENT_GRID_ENCODING LATENT_GRID_ENCODING_FLOAT // The encoding for the latent grid
+// #define PASS_TIME_TO_NETWORK 0
+// #define GRADIENT_MODE GRADIENT_MODE_OFF_OR_DIRECT // the gradient computation mode
+
+#define BLOCK_SIZE 256
+#define NUM_HIDDEN_LAYERS 2
 #define HIDDEN_CHANNELS_DIV16 2
 #define HAS_FOURIER_FEATURES 1
-#define NUM_FOURIER_FEATURES ((HIDDEN_CHANNELS_DIV16*16-4)/2)
-#define USE_DIRECTION 0 
-#define ACTIVATION ReLU
-#define OUTPUT_MODE OUTPUT_MODE_DENSITY
+#define NUM_FOURIER_FEATURES 14
+#define USE_DIRECTION 0
+#define ACTIVATION SnakeAlt
+#define OUTPUT_MODE 1
 #define FIRST_AND_LAST_IN_SHARED_MEMORY 0
 #define LATENT_GRID_CHANNELS_DIV16 1
-#define LATENT_GRID_ENCODING LATENT_GRID_ENCODING_FLOAT // The encoding for the latent grid
+#define LATENT_GRID_ENCODING 0
 #define PASS_TIME_TO_NETWORK 0
-#define GRADIENT_MODE GRADIENT_MODE_OFF_OR_DIRECT // the gradient computation mode
+#define GRADIENT_MODE 0
 
 // ------------- looks like some verifications --------------- //
 
@@ -116,27 +132,33 @@ static void fillRandomHalfMatrix_ColMajor(half* mem, //row-major
 
 int main()
 {
-	VolumeInterpolationTensorcoresParameters p;
-#if HAS_FOURIER_FEATURES==1
-	fillRandomHalfMatrix_ColMajor(p.cWeightsFourier, 3, NUM_FOURIER_FEATURES, false, true);
-#else
-	fillRandomHalfMatrix_ColMajor(p.cWeightsFirst, 3, HIDDEN_CHANNELS, false, true);
-	fillRandomHalfMatrix_ColMajor(p.cBiasFirst,    1, HIDDEN_CHANNELS, false, true);
-#endif
-	fillRandomHalfMatrix_RowMajor(p.cWeightsHidden, HIDDEN_CHANNELS, HIDDEN_CHANNELS * NUM_HIDDEN_LAYERS, false, true);
-	fillRandomHalfMatrix_RowMajor(p.cBiasHidden, HIDDEN_CHANNELS, NUM_HIDDEN_LAYERS, false, false);
-	//for (int i = 0; i < HIDDEN_CHANNELS * NUM_HIDDEN_LAYERS; ++i)
-	//	p.cBiasHidden[i] = __float2half(i);
-#if (OUTPUT_MODE == OUTPUT_MODE_RGBO) || (OUTPUT_MODE == OUTPUT_MODE_RGBO_DIRECT)
-	fillRandomHalfMatrix_ColMajor(reinterpret_cast<half*>(p.cWeightsLast), 4, HIDDEN_CHANNELS, false, true);
-	fillRandomHalfMatrix_ColMajor(reinterpret_cast<half*>(p.cBiasLast), 4, 1, false, false);
-#else
-	fillRandomHalfMatrix_ColMajor(p.cWeightsLast, 1, HIDDEN_CHANNELS, false, true);
-	fillRandomHalfMatrix_ColMajor(&p.cBiasLast, 1, 1, false, false);
-#endif
+	renderer::VolumeInterpolationNetwork net;
+	net.loadNetwork("/home/qadwu/Work/fV-SRN/applications/volnet/results/eval_CompressionTeaser/hdf5/rm60-Hybrid.volnet");
 
-	CUMAT_SAFE_CALL(cudaMemcpyToSymbol(volumeInterpolationTensorcoresParameters,
-		&p, sizeof(VolumeInterpolationTensorcoresParameters)));
+	// GlobalSettings s{};
+	// s.scalarType = positions.scalar_type();
+	// s.volumeShouldProvideNormals = false;
+	// s.interpolationInObjectSpace = false;
+	// const auto oldBoxMax = boxMax();
+	// const auto oldBoxMin = boxMin();
+	net.setBoxMin(make_double3(0, 0, 0));
+	net.setBoxMax(make_double3(1, 1, 1));
+	// int channels = outputChannels();
+
+	renderer::GlobalSettings s;
+	net.prepareRendering(s);
+
+	std::cout << net.getDefines(s) << std::endl;
+	// auto fs = net.getIncludeFileNames(s);
+	// for (auto& f : fs) {
+	// 	std::cout << f << std::endl;
+	// }
+	std::cout << net.getConstantDeclarationName(s) << std::endl;
+	std::cout << net.getPerThreadType(s) << std::endl;
+
+	void* ptr;
+	cudaGetSymbolAddress(&ptr, volumeInterpolationTensorcoresParameters);
+	net.fillConstantMemory(s, (CUdeviceptr)ptr, 0);
 
 	CUMAT_SAFE_CALL(cudaDeviceSynchronize());
 
