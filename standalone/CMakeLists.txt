@@ -30,7 +30,7 @@ add_definitions(-DNOMINMAX)
 ####################################
 
 # CUDA is always required
-find_package(CUDA REQUIRED)
+# find_package(CUDA REQUIRED)
 if(COMMAND CUDA_SELECT_NVCC_ARCH_FLAGS)
 	if (WIN32) # inference-gui
 		CUDA_SELECT_NVCC_ARCH_FLAGS(ARCH_FLAGS Auto)
@@ -55,14 +55,30 @@ find_package(CUDAToolkit REQUIRED)
 # cuMat-Settings
 add_definitions(-DCUMAT_SINGLE_THREAD_CONTEXT=1 -DTHRUST_IGNORE_CUB_VERSION_CHECK=1)
 
+
+# ------------------------------------------------------------------
+# create a target for lz4
+# ------------------------------------------------------------------
+set(LZ4_BUNDLED_MODE ON)
+set(LZ4_BUILD_CLI OFF)
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/lz4/build/cmake EXCLUDE_FROM_ALL)
+add_library(lz4cpp ${CMAKE_CURRENT_LIST_DIR}/lz4cpp.cpp)
+target_link_libraries(lz4cpp 
+PUBLIC 
+  lz4_static ${LZ4_LINK_LIBRARY}
+)
+target_include_directories(lz4cpp 
+PUBLIC 
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/lz4/lib>
+)
+
+
 ####################################
 # create the executable
 ####################################
-
 set(TEST_FILES 
 	# testSRNKernel.cu
 	mainSRNKernel.cu
-
 	volume_interpolation_network.cu
 )
 
@@ -82,6 +98,7 @@ target_include_directories(${TEST_NAME} PRIVATE
 target_link_libraries(${TEST_NAME}
 	${CUDA_LIBRARIES}
 	cuda cudadevrt
+	lz4cpp
 )
 set_property(TARGET ${TEST_NAME} PROPERTY CXX_STANDARD 17)
 target_compile_definitions(${TEST_NAME} PRIVATE CUMAT_EIGEN_SUPPORT=1)

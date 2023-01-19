@@ -7,6 +7,9 @@
 #include <vector_types.h>
 #include <mma.h>
 
+#include "loader.hpp"
+#include "cuda_buffer.h"
+
 #include <cuMat/src/Errors.h>
 #include <tinyformat.h>
 #include <third-party/Eigen/Core> // in cuMat
@@ -98,63 +101,57 @@ __global__ void SRNTestKernel()
 #endif
 }
 
-std::default_random_engine RND(42);
+#if OUTPUT_IS_COLOR==1
+#error "wrong output fomat"
+#endif
 
-static void fillRandomHalfMatrix_RowMajor(half* mem, //row-major
-	int rows, int cols, bool normalizeRows, bool normalizeCols)
+__global__ void SRNTestDecode(int dimx, int dimy, int dimz, float* __restrict__ values)
 {
-	Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic> m;
-	m.resize(rows, cols);
-	std::uniform_real_distribution<float> distr(-1, +1);
-	for (int r = 0; r < rows; ++r) for (int c = 0; c < cols; ++c)
-		m(r, c) = distr(RND);
-	if (normalizeRows)
-		m /= rows;
-	if (normalizeCols)
-		m /= cols;
-	for (int r = 0; r < rows; ++r) for (int c = 0; c < cols; ++c)
-		mem[r + c * rows] = __half2float(m(r, c));
-}
-static void fillRandomHalfMatrix_ColMajor(half* mem, //row-major
-	int rows, int cols, bool normalizeRows, bool normalizeCols)
-{
-	Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic> m;
-	m.resize(rows, cols);
-	std::uniform_real_distribution<float> distr(-1, +1);
-	for (int r = 0; r < rows; ++r) for (int c = 0; c < cols; ++c)
-		m(r, c) = distr(RND);
-	if (normalizeRows)
-		m /= rows;
-	if (normalizeCols)
-		m /= cols;
-	for (int r = 0; r < rows; ++r) for (int c = 0; c < cols; ++c)
-		mem[c + r * cols] = __half2float(m(r, c));
+  	const uint64_t i = (uint64_t)blockIdx.x * blockDim.x + threadIdx.x;
+
+	const uint64_t N = (uint64_t)dimx * (uint64_t)dimy * (uint64_t)dimz;
+  	if (i >= N) return;
+
+	const uint64_t stride = (uint64_t)dimx * dimy;
+	const int32_t x =  i % dimx;
+	const int32_t y = (i % stride) / dimx;
+	const int32_t z =  i / stride;
+
+	VolumeInterpolationTensorcores srn;
+
+	auto in  = make_real3((x+0.5f) / dimx, (y+0.5f) / dimy, (z+0.5f) / dimz);
+	auto out = srn.eval<real_t>(in, dummy_direction, 0);
+	values[i] = out.value;
 }
 
 int main()
 {
+	GridDesc data = loader::load("/home/qadwu/Work/fV-SRN/applications/volumes/RichtmyerMeshkov/ppm-t0060.cvol");
+	std::cout << "data.dims = " << data.dims[0] << " " << data.dims[1] << " " << data.dims[2] << std::endl;
+	std::cout << "data.type = " << data.type << std::endl;
+	std::cout << std::endl;
+
+	const uint64_t n_voxels = (uint64_t)data.dims[0] * (uint64_t)data.dims[1] * (uint64_t)data.dims[2];
+
+	CUDABuffer gmem;
+	gmem.resize(n_voxels * sizeof(float));
+
 	renderer::VolumeInterpolationNetwork net;
 	net.loadNetwork("/home/qadwu/Work/fV-SRN/applications/volnet/results/eval_CompressionTeaser/hdf5/rm60-Hybrid.volnet");
 
 	renderer::GlobalSettings s{};
-	// s.scalarType = positions.scalar_type();
 	s.volumeShouldProvideNormals = false;
 	s.interpolationInObjectSpace = false;
-	// const auto oldBoxMax = boxMax();
-	// const auto oldBoxMin = boxMin();
 	net.setBoxMin(make_double3(0, 0, 0));
 	net.setBoxMax(make_double3(1, 1, 1));
-	// int channels = outputChannels();
-
 	net.prepareRendering(s);
 
+	std::cout << "-------" << std::endl;
 	std::cout << net.getDefines(s) << std::endl;
-	// auto fs = net.getIncludeFileNames(s);
-	// for (auto& f : fs) {
-	// 	std::cout << f << std::endl;
-	// }
+	std::cout << "-------" << std::endl;
 	std::cout << net.getConstantDeclarationName(s) << std::endl;
 	std::cout << net.getPerThreadType(s) << std::endl;
+	std::cout << "-------" << std::endl;
 
 	void* ptr;
 	cudaGetSymbolAddress(&ptr, volumeInterpolationTensorcoresParameters);
@@ -162,41 +159,21 @@ int main()
 
 	CUMAT_SAFE_CALL(cudaDeviceSynchronize());
 
-	SRNTestKernel<<<1, BLOCK_SIZE>>>();
+	// SRNTestKernel<<<1, BLOCK_SIZE>>>();
+
+	SRNTestDecode<<<util::div_round_up<uint64_t>(n_voxels, BLOCK_SIZE), BLOCK_SIZE>>>(
+		data.dims[0], data.dims[1], data.dims[2],
+		(float*)gmem.d_pointer()
+	);
 
 	CUMAT_SAFE_CALL(cudaDeviceSynchronize());
 
-	// //launch kernel
-	// int blockSize;
-	// if (s.fixedBlockSize>0)
-	// {
-	// 	if (s.fixedBlockSize > fun.bestBlockSize())
-	// 		throw std::runtime_error("larger block size requested that can be fulfilled");
-	// 	blockSize = s.fixedBlockSize;
-	// } else
-	// {
-	// 	blockSize = fun.bestBlockSize();
-	// }
-	// int minGridSize = std::min(
-	// 	int(CUMAT_DIV_UP(batches, blockSize)),
-	// 	fun.minGridSize());
-	// dim3 virtual_size{
-	// 	static_cast<unsigned int>(batches), 1, 1 };
-	// bool success = RENDERER_DISPATCH_FLOATING_TYPES(s.scalarType, "IVolumeInterpolation::evaluate", [&]()
-	// 	{
-	// 		const auto accPosition = accessor< ::kernel::Tensor2Read<scalar_t>>(positions);
-	// 		const auto accDirection = hasDirection
-	// 			? accessor< ::kernel::Tensor2Read<scalar_t>>(direction)
-	// 			: ::kernel::Tensor2Read<scalar_t>();
-	// 		const auto accDensity = accessor< ::kernel::Tensor2RW<scalar_t>>(densities);
-	// 		const void* args[] = { &virtual_size, &accPosition, &accDirection, &accDensity };
-	// 		auto result = cuLaunchKernel(
-	// 			fun.fun(), minGridSize, 1, 1, blockSize, 1, 1,
-	// 			0, stream, const_cast<void**>(args), NULL);
-	// 		if (result != CUDA_SUCCESS)
-	// 			return printError(result, kernelName);
-	// 		return true;
-	// 	});
+	std::vector<float> output(n_voxels);
+	gmem.download(output.data(), n_voxels);
+
+    auto w = vidi::filemap_write_create("test.raw", n_voxels * sizeof(float));
+    vidi::filemap_random_write(w, 0, output.data(), n_voxels * sizeof(float));
+    vidi::filemap_close(w);
 
 	return 0;
 }
