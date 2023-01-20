@@ -10,10 +10,6 @@
 #include "loader.hpp"
 #include "cuda_buffer.h"
 
-#include <cuMat/src/Errors.h>
-#include <tinyformat.h>
-#include <third-party/Eigen/Core> // in cuMat
-
 #include "volume_interpolation_network.h"
 
 // ------------- some definitions --------------- //
@@ -157,7 +153,7 @@ int main()
 	cudaGetSymbolAddress(&ptr, volumeInterpolationTensorcoresParameters);
 	net.fillConstantMemory(s, (CUdeviceptr)ptr, 0);
 
-	CUMAT_SAFE_CALL(cudaDeviceSynchronize());
+	CUDA_CHECK(cudaDeviceSynchronize());
 
 	// SRNTestKernel<<<1, BLOCK_SIZE>>>();
 
@@ -166,7 +162,7 @@ int main()
 		(float*)gmem.d_pointer()
 	);
 
-	CUMAT_SAFE_CALL(cudaDeviceSynchronize());
+	CUDA_CHECK(cudaDeviceSynchronize());
 
 	std::vector<float> output(n_voxels);
 	gmem.download(output.data(), n_voxels);

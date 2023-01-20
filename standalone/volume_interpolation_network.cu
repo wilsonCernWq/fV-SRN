@@ -1,20 +1,16 @@
 #include "volume_interpolation_network.h"
 
-// #include <magic_enum.hpp>
-
-#include <cuMat/src/Errors.h>
-
 #include <cuda_runtime.h>
 
+#include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <vector>
 
-// #include "IconsFontAwesome5.h"
-// #include "portable-file-dialogs.h"
-// #include "pytorch_utils.h"
 #include "renderer_utils.cuh"
-// #include "sha1.h"
-#include "tinyformat.h"
+#include "cuda_utils.h"
+
+#include <tinyformat.h>
 
 #define CU_SAFE_CALL( err ) (err)
 #ifdef _MSC_VER
@@ -495,7 +491,7 @@ renderer::LatentGrid::GPUArray::GPUArray(int sizeX, int sizeY, int sizeZ, bool i
 	auto format = isFloat ? cudaChannelFormatKindFloat : cudaChannelFormatKindUnsigned;
 	cudaChannelFormatDesc channelDesc = cudaCreateChannelDesc(
 		bitsPerType, bitsPerType, bitsPerType, bitsPerType, format);
-	CUMAT_SAFE_CALL(cudaMalloc3DArray(&array, &channelDesc, extent));
+	CUDA_CHECK(cudaMalloc3DArray(&array, &channelDesc, extent));
 
 	cudaMemcpy3DParms params = { 0 };
 	params.srcPtr = make_cudaPitchedPtr(const_cast<char*>(data),
@@ -503,7 +499,7 @@ renderer::LatentGrid::GPUArray::GPUArray(int sizeX, int sizeY, int sizeZ, bool i
 	params.dstArray = array;
 	params.extent = extent;
 	params.kind = cudaMemcpyHostToDevice;
-	CUMAT_SAFE_CALL(cudaMemcpy3D(&params));
+	CUDA_CHECK(cudaMemcpy3D(&params));
 
 	//create texture object
 	cudaResourceDesc resDesc;
@@ -518,18 +514,18 @@ renderer::LatentGrid::GPUArray::GPUArray(int sizeX, int sizeY, int sizeZ, bool i
 	texDesc.filterMode = cudaFilterModeLinear;
 	texDesc.readMode = isFloat ? cudaReadModeElementType : cudaReadModeNormalizedFloat;
 	texDesc.normalizedCoords = 1;
-	CUMAT_SAFE_CALL(cudaCreateTextureObject(&texture, &resDesc, &texDesc, NULL));
+	CUDA_CHECK(cudaCreateTextureObject(&texture, &resDesc, &texDesc, NULL));
 }
 
 renderer::LatentGrid::GPUArray::~GPUArray()
 {
 	if (texture) {
-		CUMAT_SAFE_CALL_NO_THROW(cudaDestroyTextureObject(texture));
+		CUDA_CHECK_NOEXCEPT(cudaDestroyTextureObject(texture));
 		texture = 0;
 	}
 	if (array)
 	{
-		CUMAT_SAFE_CALL_NO_THROW(cudaFreeArray(array));
+		CUDA_CHECK_NOEXCEPT(cudaFreeArray(array));
 		array = nullptr;
 	}
 }
