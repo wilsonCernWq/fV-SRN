@@ -18,6 +18,7 @@ from functools import lru_cache
 import logging
 import subprocess
 import pdb
+import copy
 
 from volnet.network import SceneRepresentationNetwork, InputParametrization
 from volnet.input_data import TrainingInputData
@@ -375,22 +376,29 @@ if __name__ == '__main__':
     appdir = '/home/qadwu/Work/fV-SRN/applications/'
 
     # file name
-    fn = os.path.join(appdir,f'volnet/results/{result}_256/hdf5/run00001.hdf5')
-    #fn = '/home/qadwu/Work/fV-SRN/applications/volnet/results/eval_CompressionTeaser/hdf5/rm60-OnlyNetwork.hdf5'
+    # fn = os.path.join(appdir,f'volnet/results/{result}_256/hdf5/run00001.hdf5')
+    fn = '/home/qadwu/Work/fV-SRN/applications/volnet/results/eval_CompressionTeaser/hdf5/rm60-Hybrid.hdf5'
 
-    cfn = os.path.join(appdir, f'config-files/instant-vnr/{result}.json')
-    #cfn = '/home/qadwu/Work/fV-SRN/applications/config-files/RichtmyerMeshkov-t60-v1-dvr.json'
+    # pth = os.path.join(appdir,f'volnet/results/{result}_256/model/run00001/model_epoch_200.pth')
+    pth = '/home/qadwu/Work/fV-SRN/applications/volnet/results/eval_CompressionTeaser/model/rm60-Hybrid/model_epoch_200.pth'
 
-    # out dir
-    outdir = os.path.join(appdir, f'volnet/results/{result}_256/reconstruction/')
-    #outdir = '/home/qadwu/Work/fV-SRN/applications/volnet/results/eval_CompressionTeaser/reconstruction'
+    # cfn = os.path.join(appdir, f'config-files/instant-vnr/{result}.json')
+    cfn = '/home/qadwu/Work/fV-SRN/applications/config-files/RichtmyerMeshkov-t60-v1-dvr.json'
+
+    # outdir = os.path.join(appdir, f'volnet/results/{result}_256/reconstruction/')
+    outdir = '/home/qadwu/Work/fV-SRN/applications/volnet/results/eval_CompressionTeaser/reconstruction'
     if not os.path.exists(outdir):
         os.makedirs(outdir)
 
-    #test, example network trained in eval_VolumetricFeatures.py
+    # test, example network trained in eval_VolumetricFeatures.py
     ln = LoadedModel(fn, force_config_file=cfn)
-    num_refine = 0
+    # the hdf5 file reader or writer is incorrect
+    # read the binary using pytorch directly
+    state = torch.load(pth) # {'epoch': epoch + 1, 'model': network, 'parameters': opt}
+    ln._network16 = copy.deepcopy(state['model']).to(torch.float16)
+    ln._network   = copy.deepcopy(state['model']).to(torch.float32)
 
+    num_refine = 0
     tf = 0
     ensemble = ln.min_ensemble() if ln.is_time_dependent() else 0
     time = ln.min_timestep() if ln.is_time_dependent() else 0

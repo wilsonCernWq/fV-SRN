@@ -216,7 +216,7 @@ class TrainingData:
             specified by this parameter (default=0.2 -> 20%% for validation).
             """)
         add_args('--val', 'validation', False)
-        group.add_argument("--vis:resolution", type=int, default=256, help="""
+        group.add_argument("--vis:resolution", type=int, default=1024, help="""
                         The resolution of the images / views for visualization in X and Y direction.
                         """)
         group.add_argument("--vis:stepsize", type=BigFloat, default=0.005, help="""
