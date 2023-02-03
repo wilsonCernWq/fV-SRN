@@ -1170,6 +1170,7 @@ std::string renderer::SceneNetwork::getDefines(
 	bool hasFourierFeatures = input_->numFourierFeatures > 0;
 
 	int hiddenChannels = hasFourierFeatures ? hidden_[0]->channelsIn : hidden_[0]->channelsOut;
+	std::cout << "hiddenChannels = " << hiddenChannels << std::endl;
 
 	int latentGridChannelsDiv16 = 0;
 	int latentGridEncoding = 0;
@@ -1179,14 +1180,17 @@ std::string renderer::SceneNetwork::getDefines(
 		latentGridChannelsDiv16 = latentGrid_->getTotalChannels() / 16;
 		latentGridEncoding = static_cast<int>(latentGrid_->getCommonEncoding());
 		hiddenChannels -= latentGridChannelsDiv16 * 16;
+		std::cout << "Grid hiddenChannels = " << hiddenChannels << std::endl;
 	}
 
 	int numHiddenLayers = static_cast<int>(hidden_.size()) - 1; //last layer with scalar or color output is handled separately
 	if (!hasFourierFeatures) numHiddenLayers--; //special first layer from position
 	if (hasVolumetricFeatures) numHiddenLayers--; //first layer is explicitly handled
-	for (int i = 1; i < hidden_.size(); ++i)
-		if (hidden_[i]->channelsIn != hiddenChannels)
+	for (int i = 1; i < hidden_.size(); ++i) {
+		std::cout << "[" << i << "] inC = " << hidden_[i]->channelsIn << ", outC = " << hidden_[i]->channelsOut << ", hiddenC = " << hiddenChannels << std::endl;
+		if (hidden_[i]->channelsIn != hiddenChannels) 
 			throw std::runtime_error("Currently, all hidden layers must have the same size");
+	}
 	if (hiddenChannels % 16 != 0)
 		throw std::runtime_error("Hidden channels must be a multiple of 16");
 	if (numHiddenLayers<0)

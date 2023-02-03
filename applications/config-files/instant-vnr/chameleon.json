@@ -462,7 +462,7 @@
             "selectedDensityFeatureIndex": 0,
             "selectedVelocityFeatureIndex": 0,
             "source": "VOLUME",
-            "volumePath": "/media/data/qadwu/floats/chameleon_1024x1024x1080_float32_raw_1024x1024x1080_float.cvol"
+            "volumePath": "/media/storage0/qadwu/floats/chameleon_1024x1024x1080_float32_raw_1024x1024x1080_float.cvol"
         },
         "SRN": {}
     }

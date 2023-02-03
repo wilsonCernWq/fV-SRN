@@ -1,7 +1,31 @@
 #!/bin/bash
 
 # ONLY NETWORK TRAINING
-python volnet/train_volnet.py \
+# python volnet/train_volnet_lite.py \
+#    $PWD/config-files/instant-vnr/$1.json \
+#    --train:mode world \
+#    --train:samples 256**3 \
+#    --train:sampler_importance 0.01 \
+#    --train:batchsize 64*64*128 \
+#    --rebuild_dataset 51 \
+#    --val:copy_and_split \
+#    --outputmode density:direct \
+#    --lossmode density \
+#    --layers 256:256:256:256:256:256:256:256:256 \
+#    --activation ResidualSine \
+#    --fouriercount 0 \
+#    -l1 1 \
+#    -lr 0.00005 \
+#    --lr_step 100 \
+#    -i 200 \
+#    --logdir volnet/results/$1_256/log \
+#    --modeldir volnet/results/$1_256/model \
+#    --hdf5dir volnet/results/$1_256/hdf5 \
+#    --save_frequency 20
+
+
+# HYBRID TRAINING
+python volnet/train_volnet_lite.py \
    $PWD/config-files/instant-vnr/$1.json \
    --train:mode world \
    --train:samples 256**3 \
@@ -11,41 +35,17 @@ python volnet/train_volnet.py \
    --val:copy_and_split \
    --outputmode density:direct \
    --lossmode density \
-   --layers 256:256:256:256:256:256:256:256:256 \
-   --activation ResidualSine \
-   --fouriercount 0 \
+   --layers 64:64:64:64 \
+   --activation SnakeAlt:1 \
+   --fouriercount 30 \
+   --fourierstd -1 \
+   --volumetric_features_resolution 128 \
+   --volumetric_features_channels 16 \
    -l1 1 \
-   -lr 0.00005 \
+   -lr 0.01 \
    --lr_step 100 \
    -i 200 \
-   --logdir volnet/results/$1_256/log \
-   --modeldir volnet/results/$1_256/model \
-   --hdf5dir volnet/results/$1_256/hdf5 \
+   --logdir volnet/results/$1_hybrid/log \
+   --modeldir volnet/results/$1_hybrid/model \
+   --hdf5dir volnet/results/$1_hybrid/hdf5 \
    --save_frequency 20
-
-
-# HYBRID TRAINING
-# python volnet/train_volnet.py \
-#    /home/qadwu/Work/fV-SRN/applications/config-files/instant-vnr/$1.json \
-#    --train:mode world \
-#    --train:samples 256**3 \
-#    --train:sampler_importance 0.01 \
-#    --train:batchsize 64*64*128 \
-#    --rebuild_dataset 51 \
-#    --val:copy_and_split \
-#    --outputmode density:direct \
-#    --lossmode density \
-#    --layers 128:128:128:128:128:128:128:128:128 \
-#    --activation SnakeAlt:1 \
-#    --fouriercount 14 \
-#    --fourierstd -1 \
-#    --volumetric_features_resolution 32 \
-#    --volumetric_features_channels 16 \
-#    -l1 1 \
-#    -lr 0.01 \
-#    --lr_step 100 \
-#    -i 200 \
-#    --logdir volnet/results/$1/log \
-#    --modeldir volnet/results/$1/model \
-#    --hdf5dir volnet/results/$1/hdf5 \
-#    --save_frequency 20

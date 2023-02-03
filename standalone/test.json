@@ -9,6 +9,8 @@
       "endian" : "LITTLE_ENDIAN",
       "fileName" : "/home/qadwu/Work/fV-SRN/standalone/build/test.raw",
       // "fileName" : "/home/qadwu/Work/fV-SRN/applications/volnet/results/eval_CompressionTeaser/reconstruction/points_256x256x256_fp32.raw",
+      // "fileName" : "/home/qadwu/Work/fV-SRN/applications/volnet/results/eval_CompressionTeaser/reconstruction/points_256x256x256_fp16.raw",
+      // "fileName" : "/home/qadwu/Work/fV-SRN/applications/volnet/results/eval_CompressionTeaser/reconstruction/points_256x256x256_mixed.raw",
       "fileUpperLeft" : false,
       "format" : "REGULAR_GRID_RAW_BINARY",
       "id" : 1,
@@ -35,7 +37,7 @@
       "eye" : {
         "x" : 0,
         "y" : 0,
-        "z" : 0
+        "z" : -250
       },
       "fovy" : 45,
       "projectionMode" : "PERSPECTIVE",

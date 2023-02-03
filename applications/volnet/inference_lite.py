@@ -84,22 +84,24 @@ if __name__ == '__main__':
     appdir = '/home/qadwu/Work/fV-SRN/applications/'
 
     # file name
-    # fn = os.path.join(appdir,f'volnet/results/{result}_256/hdf5/run00001.hdf5')
-    fn = '/home/qadwu/Work/fV-SRN/applications/volnet/results/eval_CompressionTeaser/hdf5/rm60-Hybrid.hdf5'
+    fn = os.path.join(appdir,f'volnet/results/{result}_hybrid/hdf5/run00001.hdf5')
+    # fn = '/home/qadwu/Work/fV-SRN/applications/volnet/results/eval_CompressionTeaser/hdf5/rm60-Hybrid.hdf5'
 
-    # pth = os.path.join(appdir,f'volnet/results/{result}_256/model/run00001/model_epoch_200.pth')
-    pth = '/home/qadwu/Work/fV-SRN/applications/volnet/results/eval_CompressionTeaser/model/rm60-Hybrid/model_epoch_200.pth'
+    pth = os.path.join(appdir,f'volnet/results/{result}_hybrid/model/run00001/model_epoch_200.pth')
+    # pth = '/home/qadwu/Work/fV-SRN/applications/volnet/results/eval_CompressionTeaser/model/rm60-Hybrid/model_epoch_200.pth'
 
-    # cfn = os.path.join(appdir, f'config-files/instant-vnr/{result}.json')
-    cfn = '/home/qadwu/Work/fV-SRN/applications/config-files/RichtmyerMeshkov-t60-v1-dvr.json'
+    cfn = os.path.join(appdir, f'config-files/instant-vnr/{result}.json')
+    # cfn = '/home/qadwu/Work/fV-SRN/applications/config-files/RichtmyerMeshkov-t60-v1-dvr.json'
 
-    # outdir = os.path.join(appdir, f'volnet/results/{result}_256/reconstruction/')
-    outdir = '/home/qadwu/Work/fV-SRN/applications/volnet/results/eval_CompressionTeaser/reconstruction'
+    outdir = os.path.join(appdir, f'volnet/results/{result}_hybrid/reconstruction/')
+    # outdir = '/home/qadwu/Work/fV-SRN/applications/volnet/results/eval_CompressionTeaser/reconstruction'
     if not os.path.exists(outdir):
         os.makedirs(outdir)
 
     # test, example network trained in eval_VolumetricFeatures.py
     ln = MyLoadedModel(pth, fn, force_config_file=cfn)
+
+    exit() # stop here to avoid decoding the volume
 
     num_refine = 0
     tf = 0
@@ -108,11 +110,11 @@ if __name__ == '__main__':
 
     # points
     N = X*Y*Z
-    linx = torch.linspace(0,1,X, dtype=ln._dtype, device=ln._device)
-    liny = torch.linspace(0,1,Y, dtype=ln._dtype, device=ln._device)
-    linz = torch.linspace(0,1,Z, dtype=ln._dtype, device=ln._device)
+    linx = torch.linspace(0,1,X, dtype=ln._dtype)
+    liny = torch.linspace(0,1,Y, dtype=ln._dtype)
+    linz = torch.linspace(0,1,Z, dtype=ln._dtype)
     # positions = torch.stack(torch.meshgrid(linz,liny,linx), dim=-1).reshape(N, 3)
-    positions = torch.stack(torch.meshgrid(linx,liny,linz), dim=-1).permute(2, 1, 0, 3).reshape(N, 3)
+    positions = torch.stack(torch.meshgrid(linx,liny,linz), dim=-1).permute(2, 1, 0, 3).reshape(N, 3).to(ln._device)
     # pdb.set_trace()
     points_torch32 = torch.zeros((N,1))
     points_torch16 = torch.zeros((N,1))

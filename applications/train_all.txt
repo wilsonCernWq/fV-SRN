@@ -1,0 +1,413 @@
+16 implicit functions loaded
+Load volume "/media/storage0/qadwu/floats/chameleon_1024x1024x1080_float32_raw_1024x1024x1080_float.cvol"
+Load feature 0
+Loaded
+Search pyrenderer in '/home/qadwu/Work/fV-SRN/bin'
+pyrenderer native library loaded
+Load settings, collect volumes and TFs
+Load settings from /home/qadwu/Work/fV-SRN/applications/config-files/instant-vnr/chameleon.json
+Initialize network
+Latent space memory: 2.0MiB
+Create the dataloader
+Generate world-space dataset for 1 TFs, 1 timesteps, 1 ensembles, and 16777216 points.
+This gives rise to 16777216 samples, split over 32 batches with a batch size of 524288.
+In total, this requires 256.0MiB for the DataLoader
+Read from cache "kernel_cache/992a58811d75cd8abe61adc62a5325b79f4dfc24.kernel"
+13 kernels loaded from cache
+Load TF 0, timestep 0, ensemble 0
+Densities: min=0.0, max=1.0, mean=0.3309571146965027
+Generate world-space dataset for 1 TFs, 1 timesteps, 1 ensembles, and 1 views of resolution 1024^2.
+This gives rise to 1048576 samples, split over 1048576 batches with a batch size of 1.
+In total, this requires 40.0MiB for the DataLoader
+Load TF 0, timestep 0, ensemble 0
+Model directory: volnet/results/chameleon_hybrid/model
+Log directory: volnet/results/chameleon_hybrid/log
+HDF5 directory: volnet/results/chameleon_hybrid/hdf5
+Current run: 00001
+{'settings': '/home/qadwu/Work/fV-SRN/applications/config-files/instant-vnr/chameleon.json', 'tf_directory': None, 'volume_filenames': None, 'ensembles': '0:1', 'time_keyframes': '0:1', 'time_train': '0:1', 'time_val': '0:1', 'train:mode': 'world', 'train:views': 8, 'train:resolution': 256, 'train:stepsize': 0.01, 'train:num_refine': 0, 'train:samples': 16777216, 'train:sampler': 'random', 'train:sampler_importance': 0.01, 'train:batchsize': 524288, 'train:disable_inversion_trick': False, 'val:copy_and_split': 0.2, 'val:mode': None, 'val:views': 8, 'val:resolution': 256, 'val:stepsize': 0.01, 'val:num_refine': 0, 'val:samples': 1024, 'val:sampler': 'random', 'val:sampler_importance': None, 'val:batchsize': None, 'vis:resolution': 1024, 'vis:stepsize': 0.005, 'vis:num_refine': None, 'sampler_cache': 'cache/', 'cache_images': False, 'rebuild_dataset': 51, 'rebuild_gridsize': 128, 'rebuild_samples_per_voxel': 8, 'rebuild_importance': None, 'rebuild_force_color': False, 'outputmode': 'density:direct', 'layers': '128:128:128:128:128:128:128:128:128', 'activation': 'SnakeAlt:1', 'fouriercount': 14, 'fourierstd': -1.0, 'time_features': 0, 'ensemble_features': 0, 'volumetric_features_channels': 16, 'volumetric_features_resolution': 32, 'volumetric_features_std': 0.01, 'volumetric_features_time_dependent': False, 'use_direction': False, 'disable_direction_in_fourier_features': False, 'fourier_position_direction_split': -1, 'use_time_direct': False, 'num_time_fourier': 0, 'meta_network': None, 'meta_activation': 'ReLU', 'meta_pretrain': None, 'lossmode': 'density', 'l1': 1.0, 'l2': 0, 'dssim': 0, 'lpips': 0, 'absorption_weighting': 0.1, 'multiply_alpha': False, 'optimizer': 'Adam', 'lr': 0.01, 'epochs': 200, 'lr_gamma': 0.5, 'lr_step': 100, 'optim_params': '{}', 'logdir': 'volnet/results/chameleon_hybrid/log', 'modeldir': 'volnet/results/chameleon_hybrid/model', 'hdf5dir': 'volnet/results/chameleon_hybrid/hdf5', 'name': None, 'save_frequency': 20, 'profile': False, 'seed': 124, 'CUDA_Device': 'NVIDIA TITAN RTX'}
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute tf_directory = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute volume_filenames = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute val:mode = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute val:sampler_importance = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute val:batchsize = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute vis:num_refine = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute rebuild_importance = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute meta_network = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute meta_pretrain = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute name = None
+git commit 9a38370a4dd2402ddfb912f7f9ef9ec0b49a77c3
+Checkpoint saved to volnet/results/chameleon_hybrid/model/run00001/model_epoch_0.pth
+Checkpoint saved to volnet/results/chameleon_hybrid/model/run00001/model_epoch_20.pth
+Checkpoint saved to volnet/results/chameleon_hybrid/model/run00001/model_epoch_40.pth
+Rebuild training data based on the loss distribution
+max loss: 0.35364410281181335
+Densities: min=0.0, max=1.0, mean=0.05673563480377197
+Checkpoint saved to volnet/results/chameleon_hybrid/model/run00001/model_epoch_60.pth
+Checkpoint saved to volnet/results/chameleon_hybrid/model/run00001/model_epoch_80.pth
+Checkpoint saved to volnet/results/chameleon_hybrid/model/run00001/model_epoch_100.pth
+Rebuild training data based on the loss distribution
+max loss: 6.425957679748535
+Densities: min=0.0, max=1.0, mean=0.13242751359939575
+Checkpoint saved to volnet/results/chameleon_hybrid/model/run00001/model_epoch_120.pth
+Checkpoint saved to volnet/results/chameleon_hybrid/model/run00001/model_epoch_140.pth
+Rebuild training data based on the loss distribution
+max loss: 3.811410903930664
+Densities: min=0.0, max=1.0, mean=0.11187683045864105
+Checkpoint saved to volnet/results/chameleon_hybrid/model/run00001/model_epoch_160.pth
+Checkpoint saved to volnet/results/chameleon_hybrid/model/run00001/model_epoch_180.pth
+Checkpoint saved to volnet/results/chameleon_hybrid/model/run00001/model_epoch_200.pth
+Done in 1363.8299026489258 seconds
+16 implicit functions loaded
+Load volume "/media/storage0/qadwu/floats/1atm_heatrelease_1152x320x853_float32_raw_1152x320x853_float.cvol"
+Load feature 0
+Loaded
+Search pyrenderer in '/home/qadwu/Work/fV-SRN/bin'
+pyrenderer native library loaded
+Load settings, collect volumes and TFs
+Load settings from /home/qadwu/Work/fV-SRN/applications/config-files/instant-vnr/heatrelease_1atm.json
+Initialize network
+Latent space memory: 2.0MiB
+Create the dataloader
+Generate world-space dataset for 1 TFs, 1 timesteps, 1 ensembles, and 16777216 points.
+This gives rise to 16777216 samples, split over 32 batches with a batch size of 524288.
+In total, this requires 256.0MiB for the DataLoader
+Read from cache "kernel_cache/992a58811d75cd8abe61adc62a5325b79f4dfc24.kernel"
+13 kernels loaded from cache
+Load TF 0, timestep 0, ensemble 0
+Densities: min=0.0, max=1.0, mean=0.9459291696548462
+Generate world-space dataset for 1 TFs, 1 timesteps, 1 ensembles, and 1 views of resolution 1024^2.
+This gives rise to 1048576 samples, split over 1048576 batches with a batch size of 1.
+In total, this requires 40.0MiB for the DataLoader
+Load TF 0, timestep 0, ensemble 0
+Model directory: volnet/results/heatrelease_1atm_hybrid/model
+Log directory: volnet/results/heatrelease_1atm_hybrid/log
+HDF5 directory: volnet/results/heatrelease_1atm_hybrid/hdf5
+Current run: 00001
+{'settings': '/home/qadwu/Work/fV-SRN/applications/config-files/instant-vnr/heatrelease_1atm.json', 'tf_directory': None, 'volume_filenames': None, 'ensembles': '0:1', 'time_keyframes': '0:1', 'time_train': '0:1', 'time_val': '0:1', 'train:mode': 'world', 'train:views': 8, 'train:resolution': 256, 'train:stepsize': 0.01, 'train:num_refine': 0, 'train:samples': 16777216, 'train:sampler': 'random', 'train:sampler_importance': 0.01, 'train:batchsize': 524288, 'train:disable_inversion_trick': False, 'val:copy_and_split': 0.2, 'val:mode': None, 'val:views': 8, 'val:resolution': 256, 'val:stepsize': 0.01, 'val:num_refine': 0, 'val:samples': 1024, 'val:sampler': 'random', 'val:sampler_importance': None, 'val:batchsize': None, 'vis:resolution': 1024, 'vis:stepsize': 0.005, 'vis:num_refine': None, 'sampler_cache': 'cache/', 'cache_images': False, 'rebuild_dataset': 51, 'rebuild_gridsize': 128, 'rebuild_samples_per_voxel': 8, 'rebuild_importance': None, 'rebuild_force_color': False, 'outputmode': 'density:direct', 'layers': '128:128:128:128:128:128:128:128:128', 'activation': 'SnakeAlt:1', 'fouriercount': 14, 'fourierstd': -1.0, 'time_features': 0, 'ensemble_features': 0, 'volumetric_features_channels': 16, 'volumetric_features_resolution': 32, 'volumetric_features_std': 0.01, 'volumetric_features_time_dependent': False, 'use_direction': False, 'disable_direction_in_fourier_features': False, 'fourier_position_direction_split': -1, 'use_time_direct': False, 'num_time_fourier': 0, 'meta_network': None, 'meta_activation': 'ReLU', 'meta_pretrain': None, 'lossmode': 'density', 'l1': 1.0, 'l2': 0, 'dssim': 0, 'lpips': 0, 'absorption_weighting': 0.1, 'multiply_alpha': False, 'optimizer': 'Adam', 'lr': 0.01, 'epochs': 200, 'lr_gamma': 0.5, 'lr_step': 100, 'optim_params': '{}', 'logdir': 'volnet/results/heatrelease_1atm_hybrid/log', 'modeldir': 'volnet/results/heatrelease_1atm_hybrid/model', 'hdf5dir': 'volnet/results/heatrelease_1atm_hybrid/hdf5', 'name': None, 'save_frequency': 20, 'profile': False, 'seed': 124, 'CUDA_Device': 'NVIDIA TITAN RTX'}
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute tf_directory = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute volume_filenames = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute val:mode = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute val:sampler_importance = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute val:batchsize = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute vis:num_refine = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute rebuild_importance = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute meta_network = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute meta_pretrain = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute name = None
+git commit 9a38370a4dd2402ddfb912f7f9ef9ec0b49a77c3
+Checkpoint saved to volnet/results/heatrelease_1atm_hybrid/model/run00001/model_epoch_0.pth
+Checkpoint saved to volnet/results/heatrelease_1atm_hybrid/model/run00001/model_epoch_20.pth
+Checkpoint saved to volnet/results/heatrelease_1atm_hybrid/model/run00001/model_epoch_40.pth
+Rebuild training data based on the loss distribution
+max loss: 1.5192092657089233
+Densities: min=0.0, max=1.0, mean=0.6701661348342896
+Checkpoint saved to volnet/results/heatrelease_1atm_hybrid/model/run00001/model_epoch_60.pth
+Checkpoint saved to volnet/results/heatrelease_1atm_hybrid/model/run00001/model_epoch_80.pth
+Checkpoint saved to volnet/results/heatrelease_1atm_hybrid/model/run00001/model_epoch_100.pth
+Rebuild training data based on the loss distribution
+max loss: 7.898885726928711
+Densities: min=0.0, max=1.0, mean=0.8484538197517395
+Checkpoint saved to volnet/results/heatrelease_1atm_hybrid/model/run00001/model_epoch_120.pth
+Checkpoint saved to volnet/results/heatrelease_1atm_hybrid/model/run00001/model_epoch_140.pth
+Rebuild training data based on the loss distribution
+max loss: 3.1926352977752686
+Densities: min=0.0, max=1.0, mean=0.7433373928070068
+Checkpoint saved to volnet/results/heatrelease_1atm_hybrid/model/run00001/model_epoch_160.pth
+Checkpoint saved to volnet/results/heatrelease_1atm_hybrid/model/run00001/model_epoch_180.pth
+Checkpoint saved to volnet/results/heatrelease_1atm_hybrid/model/run00001/model_epoch_200.pth
+Done in 1320.2568917274475 seconds
+16 implicit functions loaded
+Load volume "/media/storage0/qadwu/floats/10atm_heatrelease_1152x426x853_float32_raw_1152x426x853_float.cvol"
+Load feature 0
+Loaded
+Search pyrenderer in '/home/qadwu/Work/fV-SRN/bin'
+pyrenderer native library loaded
+Load settings, collect volumes and TFs
+Load settings from /home/qadwu/Work/fV-SRN/applications/config-files/instant-vnr/heatrelease_10atm.json
+Initialize network
+Latent space memory: 2.0MiB
+Create the dataloader
+Generate world-space dataset for 1 TFs, 1 timesteps, 1 ensembles, and 16777216 points.
+This gives rise to 16777216 samples, split over 32 batches with a batch size of 524288.
+In total, this requires 256.0MiB for the DataLoader
+Read from cache "kernel_cache/992a58811d75cd8abe61adc62a5325b79f4dfc24.kernel"
+13 kernels loaded from cache
+Load TF 0, timestep 0, ensemble 0
+Densities: min=0.0, max=1.0, mean=0.9658703804016113
+Generate world-space dataset for 1 TFs, 1 timesteps, 1 ensembles, and 1 views of resolution 1024^2.
+This gives rise to 1048576 samples, split over 1048576 batches with a batch size of 1.
+In total, this requires 40.0MiB for the DataLoader
+Load TF 0, timestep 0, ensemble 0
+Model directory: volnet/results/heatrelease_10atm_hybrid/model
+Log directory: volnet/results/heatrelease_10atm_hybrid/log
+HDF5 directory: volnet/results/heatrelease_10atm_hybrid/hdf5
+Current run: 00001
+{'settings': '/home/qadwu/Work/fV-SRN/applications/config-files/instant-vnr/heatrelease_10atm.json', 'tf_directory': None, 'volume_filenames': None, 'ensembles': '0:1', 'time_keyframes': '0:1', 'time_train': '0:1', 'time_val': '0:1', 'train:mode': 'world', 'train:views': 8, 'train:resolution': 256, 'train:stepsize': 0.01, 'train:num_refine': 0, 'train:samples': 16777216, 'train:sampler': 'random', 'train:sampler_importance': 0.01, 'train:batchsize': 524288, 'train:disable_inversion_trick': False, 'val:copy_and_split': 0.2, 'val:mode': None, 'val:views': 8, 'val:resolution': 256, 'val:stepsize': 0.01, 'val:num_refine': 0, 'val:samples': 1024, 'val:sampler': 'random', 'val:sampler_importance': None, 'val:batchsize': None, 'vis:resolution': 1024, 'vis:stepsize': 0.005, 'vis:num_refine': None, 'sampler_cache': 'cache/', 'cache_images': False, 'rebuild_dataset': 51, 'rebuild_gridsize': 128, 'rebuild_samples_per_voxel': 8, 'rebuild_importance': None, 'rebuild_force_color': False, 'outputmode': 'density:direct', 'layers': '128:128:128:128:128:128:128:128:128', 'activation': 'SnakeAlt:1', 'fouriercount': 14, 'fourierstd': -1.0, 'time_features': 0, 'ensemble_features': 0, 'volumetric_features_channels': 16, 'volumetric_features_resolution': 32, 'volumetric_features_std': 0.01, 'volumetric_features_time_dependent': False, 'use_direction': False, 'disable_direction_in_fourier_features': False, 'fourier_position_direction_split': -1, 'use_time_direct': False, 'num_time_fourier': 0, 'meta_network': None, 'meta_activation': 'ReLU', 'meta_pretrain': None, 'lossmode': 'density', 'l1': 1.0, 'l2': 0, 'dssim': 0, 'lpips': 0, 'absorption_weighting': 0.1, 'multiply_alpha': False, 'optimizer': 'Adam', 'lr': 0.01, 'epochs': 200, 'lr_gamma': 0.5, 'lr_step': 100, 'optim_params': '{}', 'logdir': 'volnet/results/heatrelease_10atm_hybrid/log', 'modeldir': 'volnet/results/heatrelease_10atm_hybrid/model', 'hdf5dir': 'volnet/results/heatrelease_10atm_hybrid/hdf5', 'name': None, 'save_frequency': 20, 'profile': False, 'seed': 124, 'CUDA_Device': 'NVIDIA TITAN RTX'}
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute tf_directory = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute volume_filenames = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute val:mode = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute val:sampler_importance = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute val:batchsize = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute vis:num_refine = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute rebuild_importance = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute meta_network = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute meta_pretrain = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute name = None
+git commit 9a38370a4dd2402ddfb912f7f9ef9ec0b49a77c3
+Checkpoint saved to volnet/results/heatrelease_10atm_hybrid/model/run00001/model_epoch_0.pth
+Checkpoint saved to volnet/results/heatrelease_10atm_hybrid/model/run00001/model_epoch_20.pth
+Checkpoint saved to volnet/results/heatrelease_10atm_hybrid/model/run00001/model_epoch_40.pth
+Rebuild training data based on the loss distribution
+max loss: 0.9745409488677979
+Densities: min=0.0, max=1.0, mean=0.804232120513916
+Checkpoint saved to volnet/results/heatrelease_10atm_hybrid/model/run00001/model_epoch_60.pth
+Checkpoint saved to volnet/results/heatrelease_10atm_hybrid/model/run00001/model_epoch_80.pth
+Checkpoint saved to volnet/results/heatrelease_10atm_hybrid/model/run00001/model_epoch_100.pth
+Rebuild training data based on the loss distribution
+max loss: 0.9038450717926025
+Densities: min=0.0, max=1.0, mean=0.827398955821991
+Checkpoint saved to volnet/results/heatrelease_10atm_hybrid/model/run00001/model_epoch_120.pth
+Checkpoint saved to volnet/results/heatrelease_10atm_hybrid/model/run00001/model_epoch_140.pth
+Rebuild training data based on the loss distribution
+max loss: 0.9870381951332092
+Densities: min=0.0, max=1.0, mean=0.8302121162414551
+Checkpoint saved to volnet/results/heatrelease_10atm_hybrid/model/run00001/model_epoch_160.pth
+Checkpoint saved to volnet/results/heatrelease_10atm_hybrid/model/run00001/model_epoch_180.pth
+Checkpoint saved to volnet/results/heatrelease_10atm_hybrid/model/run00001/model_epoch_200.pth
+Done in 977.9477610588074 seconds
+16 implicit functions loaded
+Load volume "/media/storage0/qadwu/floats/mechhand_640x220x229_float32_raw_640x220x229_float.cvol"
+Load feature 0
+Loaded
+Search pyrenderer in '/home/qadwu/Work/fV-SRN/bin'
+pyrenderer native library loaded
+Load settings, collect volumes and TFs
+Load settings from /home/qadwu/Work/fV-SRN/applications/config-files/instant-vnr/mechhand.json
+Initialize network
+Latent space memory: 2.0MiB
+Create the dataloader
+Generate world-space dataset for 1 TFs, 1 timesteps, 1 ensembles, and 16777216 points.
+This gives rise to 16777216 samples, split over 32 batches with a batch size of 524288.
+In total, this requires 256.0MiB for the DataLoader
+Read from cache "kernel_cache/992a58811d75cd8abe61adc62a5325b79f4dfc24.kernel"
+13 kernels loaded from cache
+Load TF 0, timestep 0, ensemble 0
+Densities: min=0.0, max=0.9999684691429138, mean=0.39828646183013916
+Generate world-space dataset for 1 TFs, 1 timesteps, 1 ensembles, and 1 views of resolution 1024^2.
+This gives rise to 1048576 samples, split over 1048576 batches with a batch size of 1.
+In total, this requires 40.0MiB for the DataLoader
+Load TF 0, timestep 0, ensemble 0
+Model directory: volnet/results/mechhand_hybrid/model
+Log directory: volnet/results/mechhand_hybrid/log
+HDF5 directory: volnet/results/mechhand_hybrid/hdf5
+Current run: 00001
+{'settings': '/home/qadwu/Work/fV-SRN/applications/config-files/instant-vnr/mechhand.json', 'tf_directory': None, 'volume_filenames': None, 'ensembles': '0:1', 'time_keyframes': '0:1', 'time_train': '0:1', 'time_val': '0:1', 'train:mode': 'world', 'train:views': 8, 'train:resolution': 256, 'train:stepsize': 0.01, 'train:num_refine': 0, 'train:samples': 16777216, 'train:sampler': 'random', 'train:sampler_importance': 0.01, 'train:batchsize': 524288, 'train:disable_inversion_trick': False, 'val:copy_and_split': 0.2, 'val:mode': None, 'val:views': 8, 'val:resolution': 256, 'val:stepsize': 0.01, 'val:num_refine': 0, 'val:samples': 1024, 'val:sampler': 'random', 'val:sampler_importance': None, 'val:batchsize': None, 'vis:resolution': 1024, 'vis:stepsize': 0.005, 'vis:num_refine': None, 'sampler_cache': 'cache/', 'cache_images': False, 'rebuild_dataset': 51, 'rebuild_gridsize': 128, 'rebuild_samples_per_voxel': 8, 'rebuild_importance': None, 'rebuild_force_color': False, 'outputmode': 'density:direct', 'layers': '128:128:128:128:128:128:128:128:128', 'activation': 'SnakeAlt:1', 'fouriercount': 14, 'fourierstd': -1.0, 'time_features': 0, 'ensemble_features': 0, 'volumetric_features_channels': 16, 'volumetric_features_resolution': 32, 'volumetric_features_std': 0.01, 'volumetric_features_time_dependent': False, 'use_direction': False, 'disable_direction_in_fourier_features': False, 'fourier_position_direction_split': -1, 'use_time_direct': False, 'num_time_fourier': 0, 'meta_network': None, 'meta_activation': 'ReLU', 'meta_pretrain': None, 'lossmode': 'density', 'l1': 1.0, 'l2': 0, 'dssim': 0, 'lpips': 0, 'absorption_weighting': 0.1, 'multiply_alpha': False, 'optimizer': 'Adam', 'lr': 0.01, 'epochs': 200, 'lr_gamma': 0.5, 'lr_step': 100, 'optim_params': '{}', 'logdir': 'volnet/results/mechhand_hybrid/log', 'modeldir': 'volnet/results/mechhand_hybrid/model', 'hdf5dir': 'volnet/results/mechhand_hybrid/hdf5', 'name': None, 'save_frequency': 20, 'profile': False, 'seed': 124, 'CUDA_Device': 'NVIDIA TITAN RTX'}
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute tf_directory = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute volume_filenames = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute val:mode = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute val:sampler_importance = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute val:batchsize = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute vis:num_refine = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute rebuild_importance = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute meta_network = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute meta_pretrain = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute name = None
+git commit 9a38370a4dd2402ddfb912f7f9ef9ec0b49a77c3
+Checkpoint saved to volnet/results/mechhand_hybrid/model/run00001/model_epoch_0.pth
+Checkpoint saved to volnet/results/mechhand_hybrid/model/run00001/model_epoch_20.pth
+Checkpoint saved to volnet/results/mechhand_hybrid/model/run00001/model_epoch_40.pth
+Rebuild training data based on the loss distribution
+max loss: 0.5238845348358154
+Densities: min=0.0, max=0.999988317489624, mean=0.11649283766746521
+Checkpoint saved to volnet/results/mechhand_hybrid/model/run00001/model_epoch_60.pth
+Checkpoint saved to volnet/results/mechhand_hybrid/model/run00001/model_epoch_80.pth
+Checkpoint saved to volnet/results/mechhand_hybrid/model/run00001/model_epoch_100.pth
+Rebuild training data based on the loss distribution
+max loss: 0.337773859500885
+Densities: min=0.0, max=0.9999728798866272, mean=0.12823259830474854
+Checkpoint saved to volnet/results/mechhand_hybrid/model/run00001/model_epoch_120.pth
+Checkpoint saved to volnet/results/mechhand_hybrid/model/run00001/model_epoch_140.pth
+Rebuild training data based on the loss distribution
+max loss: 0.2432582676410675
+Densities: min=0.0, max=0.9999451041221619, mean=0.14343562722206116
+Checkpoint saved to volnet/results/mechhand_hybrid/model/run00001/model_epoch_160.pth
+Checkpoint saved to volnet/results/mechhand_hybrid/model/run00001/model_epoch_180.pth
+Checkpoint saved to volnet/results/mechhand_hybrid/model/run00001/model_epoch_200.pth
+Done in 978.4609053134918 seconds
+16 implicit functions loaded
+Load volume "/media/storage0/qadwu/floats/supernova_432x432x432_float32_raw_432x432x432_float.cvol"
+Load feature 0
+Loaded
+Search pyrenderer in '/home/qadwu/Work/fV-SRN/bin'
+pyrenderer native library loaded
+Load settings, collect volumes and TFs
+Load settings from /home/qadwu/Work/fV-SRN/applications/config-files/instant-vnr/supernova.json
+Initialize network
+Latent space memory: 2.0MiB
+Create the dataloader
+Generate world-space dataset for 1 TFs, 1 timesteps, 1 ensembles, and 16777216 points.
+This gives rise to 16777216 samples, split over 32 batches with a batch size of 524288.
+In total, this requires 256.0MiB for the DataLoader
+Read from cache "kernel_cache/992a58811d75cd8abe61adc62a5325b79f4dfc24.kernel"
+13 kernels loaded from cache
+Load TF 0, timestep 0, ensemble 0
+Densities: min=1.1987038321854566e-14, max=0.994645893573761, mean=0.41398486495018005
+Generate world-space dataset for 1 TFs, 1 timesteps, 1 ensembles, and 1 views of resolution 1024^2.
+This gives rise to 1048576 samples, split over 1048576 batches with a batch size of 1.
+In total, this requires 40.0MiB for the DataLoader
+Load TF 0, timestep 0, ensemble 0
+Model directory: volnet/results/supernova_hybrid/model
+Log directory: volnet/results/supernova_hybrid/log
+HDF5 directory: volnet/results/supernova_hybrid/hdf5
+Current run: 00001
+{'settings': '/home/qadwu/Work/fV-SRN/applications/config-files/instant-vnr/supernova.json', 'tf_directory': None, 'volume_filenames': None, 'ensembles': '0:1', 'time_keyframes': '0:1', 'time_train': '0:1', 'time_val': '0:1', 'train:mode': 'world', 'train:views': 8, 'train:resolution': 256, 'train:stepsize': 0.01, 'train:num_refine': 0, 'train:samples': 16777216, 'train:sampler': 'random', 'train:sampler_importance': 0.01, 'train:batchsize': 524288, 'train:disable_inversion_trick': False, 'val:copy_and_split': 0.2, 'val:mode': None, 'val:views': 8, 'val:resolution': 256, 'val:stepsize': 0.01, 'val:num_refine': 0, 'val:samples': 1024, 'val:sampler': 'random', 'val:sampler_importance': None, 'val:batchsize': None, 'vis:resolution': 1024, 'vis:stepsize': 0.005, 'vis:num_refine': None, 'sampler_cache': 'cache/', 'cache_images': False, 'rebuild_dataset': 51, 'rebuild_gridsize': 128, 'rebuild_samples_per_voxel': 8, 'rebuild_importance': None, 'rebuild_force_color': False, 'outputmode': 'density:direct', 'layers': '128:128:128:128:128:128:128:128:128', 'activation': 'SnakeAlt:1', 'fouriercount': 14, 'fourierstd': -1.0, 'time_features': 0, 'ensemble_features': 0, 'volumetric_features_channels': 16, 'volumetric_features_resolution': 32, 'volumetric_features_std': 0.01, 'volumetric_features_time_dependent': False, 'use_direction': False, 'disable_direction_in_fourier_features': False, 'fourier_position_direction_split': -1, 'use_time_direct': False, 'num_time_fourier': 0, 'meta_network': None, 'meta_activation': 'ReLU', 'meta_pretrain': None, 'lossmode': 'density', 'l1': 1.0, 'l2': 0, 'dssim': 0, 'lpips': 0, 'absorption_weighting': 0.1, 'multiply_alpha': False, 'optimizer': 'Adam', 'lr': 0.01, 'epochs': 200, 'lr_gamma': 0.5, 'lr_step': 100, 'optim_params': '{}', 'logdir': 'volnet/results/supernova_hybrid/log', 'modeldir': 'volnet/results/supernova_hybrid/model', 'hdf5dir': 'volnet/results/supernova_hybrid/hdf5', 'name': None, 'save_frequency': 20, 'profile': False, 'seed': 124, 'CUDA_Device': 'NVIDIA TITAN RTX'}
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute tf_directory = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute volume_filenames = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute val:mode = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute val:sampler_importance = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute val:batchsize = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute vis:num_refine = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute rebuild_importance = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute meta_network = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute meta_pretrain = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute name = None
+git commit 9a38370a4dd2402ddfb912f7f9ef9ec0b49a77c3
+Checkpoint saved to volnet/results/supernova_hybrid/model/run00001/model_epoch_0.pth
+Checkpoint saved to volnet/results/supernova_hybrid/model/run00001/model_epoch_20.pth
+Checkpoint saved to volnet/results/supernova_hybrid/model/run00001/model_epoch_40.pth
+Rebuild training data based on the loss distribution
+max loss: 0.3249413073062897
+Densities: min=1.1333540544586612e-14, max=0.9958091974258423, mean=0.12551872432231903
+Checkpoint saved to volnet/results/supernova_hybrid/model/run00001/model_epoch_60.pth
+Checkpoint saved to volnet/results/supernova_hybrid/model/run00001/model_epoch_80.pth
+Checkpoint saved to volnet/results/supernova_hybrid/model/run00001/model_epoch_100.pth
+Rebuild training data based on the loss distribution
+max loss: 9.839763641357422
+Densities: min=1.0727194550393462e-14, max=0.9930702447891235, mean=0.1683935970067978
+Checkpoint saved to volnet/results/supernova_hybrid/model/run00001/model_epoch_120.pth
+Checkpoint saved to volnet/results/supernova_hybrid/model/run00001/model_epoch_140.pth
+Rebuild training data based on the loss distribution
+max loss: 4.141678333282471
+Densities: min=9.104753761904685e-15, max=0.9978476762771606, mean=0.24788793921470642
+Checkpoint saved to volnet/results/supernova_hybrid/model/run00001/model_epoch_160.pth
+Checkpoint saved to volnet/results/supernova_hybrid/model/run00001/model_epoch_180.pth
+Checkpoint saved to volnet/results/supernova_hybrid/model/run00001/model_epoch_200.pth
+Done in 977.698712348938 seconds
+16 implicit functions loaded
+Load volume "/media/storage0/qadwu/floats/1atm_temp_1152x320x853_float32_raw_1152x320x853_float.cvol"
+Load feature 0
+Loaded
+Search pyrenderer in '/home/qadwu/Work/fV-SRN/bin'
+pyrenderer native library loaded
+Load settings, collect volumes and TFs
+Load settings from /home/qadwu/Work/fV-SRN/applications/config-files/instant-vnr/temp_1atm.json
+Initialize network
+Latent space memory: 2.0MiB
+Create the dataloader
+Generate world-space dataset for 1 TFs, 1 timesteps, 1 ensembles, and 16777216 points.
+This gives rise to 16777216 samples, split over 32 batches with a batch size of 524288.
+In total, this requires 256.0MiB for the DataLoader
+Read from cache "kernel_cache/992a58811d75cd8abe61adc62a5325b79f4dfc24.kernel"
+13 kernels loaded from cache
+Load TF 0, timestep 0, ensemble 0
+Densities: min=0.0006044767214916646, max=0.9899277687072754, mean=0.7636152505874634
+Generate world-space dataset for 1 TFs, 1 timesteps, 1 ensembles, and 1 views of resolution 1024^2.
+This gives rise to 1048576 samples, split over 1048576 batches with a batch size of 1.
+In total, this requires 40.0MiB for the DataLoader
+Load TF 0, timestep 0, ensemble 0
+Model directory: volnet/results/temp_1atm_hybrid/model
+Log directory: volnet/results/temp_1atm_hybrid/log
+HDF5 directory: volnet/results/temp_1atm_hybrid/hdf5
+Current run: 00001
+{'settings': '/home/qadwu/Work/fV-SRN/applications/config-files/instant-vnr/temp_1atm.json', 'tf_directory': None, 'volume_filenames': None, 'ensembles': '0:1', 'time_keyframes': '0:1', 'time_train': '0:1', 'time_val': '0:1', 'train:mode': 'world', 'train:views': 8, 'train:resolution': 256, 'train:stepsize': 0.01, 'train:num_refine': 0, 'train:samples': 16777216, 'train:sampler': 'random', 'train:sampler_importance': 0.01, 'train:batchsize': 524288, 'train:disable_inversion_trick': False, 'val:copy_and_split': 0.2, 'val:mode': None, 'val:views': 8, 'val:resolution': 256, 'val:stepsize': 0.01, 'val:num_refine': 0, 'val:samples': 1024, 'val:sampler': 'random', 'val:sampler_importance': None, 'val:batchsize': None, 'vis:resolution': 1024, 'vis:stepsize': 0.005, 'vis:num_refine': None, 'sampler_cache': 'cache/', 'cache_images': False, 'rebuild_dataset': 51, 'rebuild_gridsize': 128, 'rebuild_samples_per_voxel': 8, 'rebuild_importance': None, 'rebuild_force_color': False, 'outputmode': 'density:direct', 'layers': '128:128:128:128:128:128:128:128:128', 'activation': 'SnakeAlt:1', 'fouriercount': 14, 'fourierstd': -1.0, 'time_features': 0, 'ensemble_features': 0, 'volumetric_features_channels': 16, 'volumetric_features_resolution': 32, 'volumetric_features_std': 0.01, 'volumetric_features_time_dependent': False, 'use_direction': False, 'disable_direction_in_fourier_features': False, 'fourier_position_direction_split': -1, 'use_time_direct': False, 'num_time_fourier': 0, 'meta_network': None, 'meta_activation': 'ReLU', 'meta_pretrain': None, 'lossmode': 'density', 'l1': 1.0, 'l2': 0, 'dssim': 0, 'lpips': 0, 'absorption_weighting': 0.1, 'multiply_alpha': False, 'optimizer': 'Adam', 'lr': 0.01, 'epochs': 200, 'lr_gamma': 0.5, 'lr_step': 100, 'optim_params': '{}', 'logdir': 'volnet/results/temp_1atm_hybrid/log', 'modeldir': 'volnet/results/temp_1atm_hybrid/model', 'hdf5dir': 'volnet/results/temp_1atm_hybrid/hdf5', 'name': None, 'save_frequency': 20, 'profile': False, 'seed': 124, 'CUDA_Device': 'NVIDIA TITAN RTX'}
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute tf_directory = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute volume_filenames = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute val:mode = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute val:sampler_importance = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute val:batchsize = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute vis:num_refine = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute rebuild_importance = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute meta_network = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute meta_pretrain = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute name = None
+git commit 9a38370a4dd2402ddfb912f7f9ef9ec0b49a77c3
+Checkpoint saved to volnet/results/temp_1atm_hybrid/model/run00001/model_epoch_0.pth
+Checkpoint saved to volnet/results/temp_1atm_hybrid/model/run00001/model_epoch_20.pth
+Checkpoint saved to volnet/results/temp_1atm_hybrid/model/run00001/model_epoch_40.pth
+Rebuild training data based on the loss distribution
+max loss: 2.3957600593566895
+Densities: min=0.00013701921852771193, max=0.991447925567627, mean=0.37994247674942017
+Checkpoint saved to volnet/results/temp_1atm_hybrid/model/run00001/model_epoch_60.pth
+Checkpoint saved to volnet/results/temp_1atm_hybrid/model/run00001/model_epoch_80.pth
+Checkpoint saved to volnet/results/temp_1atm_hybrid/model/run00001/model_epoch_100.pth
+Rebuild training data based on the loss distribution
+max loss: 2.4993557929992676
+Densities: min=0.00012238690396770835, max=0.9892532229423523, mean=0.538370668888092
+Checkpoint saved to volnet/results/temp_1atm_hybrid/model/run00001/model_epoch_120.pth
+Checkpoint saved to volnet/results/temp_1atm_hybrid/model/run00001/model_epoch_140.pth
+Rebuild training data based on the loss distribution
+max loss: 1.456209659576416
+Densities: min=0.0001607533049536869, max=0.9881749749183655, mean=0.3690643310546875
+Checkpoint saved to volnet/results/temp_1atm_hybrid/model/run00001/model_epoch_160.pth
+Checkpoint saved to volnet/results/temp_1atm_hybrid/model/run00001/model_epoch_180.pth
+Checkpoint saved to volnet/results/temp_1atm_hybrid/model/run00001/model_epoch_200.pth
+Done in 977.2419447898865 seconds
+16 implicit functions loaded
+Load volume "/media/storage0/qadwu/floats/10atm_temp_1152x426x853_float32_raw_1152x426x853_float.cvol"
+Load feature 0
+Loaded
+Search pyrenderer in '/home/qadwu/Work/fV-SRN/bin'
+pyrenderer native library loaded
+Load settings, collect volumes and TFs
+Load settings from /home/qadwu/Work/fV-SRN/applications/config-files/instant-vnr/temp_10atm.json
+Initialize network
+Latent space memory: 2.0MiB
+Create the dataloader
+Generate world-space dataset for 1 TFs, 1 timesteps, 1 ensembles, and 16777216 points.
+This gives rise to 16777216 samples, split over 32 batches with a batch size of 524288.
+In total, this requires 256.0MiB for the DataLoader
+Read from cache "kernel_cache/992a58811d75cd8abe61adc62a5325b79f4dfc24.kernel"
+13 kernels loaded from cache
+Load TF 0, timestep 0, ensemble 0
+Densities: min=0.0005486201262101531, max=0.9919331073760986, mean=0.6802641153335571
+Generate world-space dataset for 1 TFs, 1 timesteps, 1 ensembles, and 1 views of resolution 1024^2.
+This gives rise to 1048576 samples, split over 1048576 batches with a batch size of 1.
+In total, this requires 40.0MiB for the DataLoader
+Load TF 0, timestep 0, ensemble 0
+Model directory: volnet/results/temp_10atm_hybrid/model
+Log directory: volnet/results/temp_10atm_hybrid/log
+HDF5 directory: volnet/results/temp_10atm_hybrid/hdf5
+Current run: 00001
+{'settings': '/home/qadwu/Work/fV-SRN/applications/config-files/instant-vnr/temp_10atm.json', 'tf_directory': None, 'volume_filenames': None, 'ensembles': '0:1', 'time_keyframes': '0:1', 'time_train': '0:1', 'time_val': '0:1', 'train:mode': 'world', 'train:views': 8, 'train:resolution': 256, 'train:stepsize': 0.01, 'train:num_refine': 0, 'train:samples': 16777216, 'train:sampler': 'random', 'train:sampler_importance': 0.01, 'train:batchsize': 524288, 'train:disable_inversion_trick': False, 'val:copy_and_split': 0.2, 'val:mode': None, 'val:views': 8, 'val:resolution': 256, 'val:stepsize': 0.01, 'val:num_refine': 0, 'val:samples': 1024, 'val:sampler': 'random', 'val:sampler_importance': None, 'val:batchsize': None, 'vis:resolution': 1024, 'vis:stepsize': 0.005, 'vis:num_refine': None, 'sampler_cache': 'cache/', 'cache_images': False, 'rebuild_dataset': 51, 'rebuild_gridsize': 128, 'rebuild_samples_per_voxel': 8, 'rebuild_importance': None, 'rebuild_force_color': False, 'outputmode': 'density:direct', 'layers': '128:128:128:128:128:128:128:128:128', 'activation': 'SnakeAlt:1', 'fouriercount': 14, 'fourierstd': -1.0, 'time_features': 0, 'ensemble_features': 0, 'volumetric_features_channels': 16, 'volumetric_features_resolution': 32, 'volumetric_features_std': 0.01, 'volumetric_features_time_dependent': False, 'use_direction': False, 'disable_direction_in_fourier_features': False, 'fourier_position_direction_split': -1, 'use_time_direct': False, 'num_time_fourier': 0, 'meta_network': None, 'meta_activation': 'ReLU', 'meta_pretrain': None, 'lossmode': 'density', 'l1': 1.0, 'l2': 0, 'dssim': 0, 'lpips': 0, 'absorption_weighting': 0.1, 'multiply_alpha': False, 'optimizer': 'Adam', 'lr': 0.01, 'epochs': 200, 'lr_gamma': 0.5, 'lr_step': 100, 'optim_params': '{}', 'logdir': 'volnet/results/temp_10atm_hybrid/log', 'modeldir': 'volnet/results/temp_10atm_hybrid/model', 'hdf5dir': 'volnet/results/temp_10atm_hybrid/hdf5', 'name': None, 'save_frequency': 20, 'profile': False, 'seed': 124, 'CUDA_Device': 'NVIDIA TITAN RTX'}
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute tf_directory = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute volume_filenames = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute val:mode = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute val:sampler_importance = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute val:batchsize = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute vis:num_refine = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute rebuild_importance = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute meta_network = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute meta_pretrain = None
+Exception Object dtype dtype('O') has no native HDF5 equivalent while saving attribute name = None
+git commit 9a38370a4dd2402ddfb912f7f9ef9ec0b49a77c3
+Checkpoint saved to volnet/results/temp_10atm_hybrid/model/run00001/model_epoch_0.pth
+Checkpoint saved to volnet/results/temp_10atm_hybrid/model/run00001/model_epoch_20.pth
+Checkpoint saved to volnet/results/temp_10atm_hybrid/model/run00001/model_epoch_40.pth
+Rebuild training data based on the loss distribution
+max loss: 1.612320065498352
+Densities: min=0.0005458213854581118, max=0.9968539476394653, mean=0.3943575620651245
+Checkpoint saved to volnet/results/temp_10atm_hybrid/model/run00001/model_epoch_60.pth
+Checkpoint saved to volnet/results/temp_10atm_hybrid/model/run00001/model_epoch_80.pth
+Checkpoint saved to volnet/results/temp_10atm_hybrid/model/run00001/model_epoch_100.pth
+Rebuild training data based on the loss distribution
+max loss: 1.7846801280975342
+Densities: min=0.0005442476831376553, max=0.9940977692604065, mean=0.4322800040245056
+Checkpoint saved to volnet/results/temp_10atm_hybrid/model/run00001/model_epoch_120.pth
+Checkpoint saved to volnet/results/temp_10atm_hybrid/model/run00001/model_epoch_140.pth
+Rebuild training data based on the loss distribution
+max loss: 3.4438445568084717
+Densities: min=0.0004901131032966077, max=0.9952629208564758, mean=0.42301300168037415
+Checkpoint saved to volnet/results/temp_10atm_hybrid/model/run00001/model_epoch_160.pth
+Checkpoint saved to volnet/results/temp_10atm_hybrid/model/run00001/model_epoch_180.pth
+Checkpoint saved to volnet/results/temp_10atm_hybrid/model/run00001/model_epoch_200.pth
+Done in 977.5728514194489 seconds

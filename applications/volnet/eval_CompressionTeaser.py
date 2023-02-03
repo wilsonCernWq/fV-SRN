@@ -316,8 +316,8 @@ def eval(config: Config, only_grid_resolution:int, stepsize:float, compression:f
     height = 1024
     timer = pyrenderer.GPUTimer()
 
-    # rendering_mode = LoadedModel.EvaluationMode.TENSORCORES_MIXED
-    rendering_mode = LoadedModel.EvaluationMode.PYTORCH16
+    rendering_mode = LoadedModel.EvaluationMode.TENSORCORES_MIXED
+    # rendering_mode = LoadedModel.EvaluationMode.PYTORCH16
     enable_preintegration = True
     rendering_mode_no_tc = LoadedModel.EvaluationMode.PYTORCH16
 

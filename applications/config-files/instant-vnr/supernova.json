@@ -462,7 +462,7 @@
             "selectedDensityFeatureIndex": 0,
             "selectedVelocityFeatureIndex": 0,
             "source": "VOLUME",
-            "volumePath": "/media/data/qadwu/floats/supernova_432x432x432_float32_raw_432x432x432_float.cvol"
+            "volumePath": "/media/storage0/qadwu/floats/supernova_432x432x432_float32_raw_432x432x432_float.cvol"
         },
         "SRN": {}
     }

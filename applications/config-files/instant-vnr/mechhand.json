@@ -462,7 +462,7 @@
             "selectedDensityFeatureIndex": 0,
             "selectedVelocityFeatureIndex": 0,
             "source": "VOLUME",
-            "volumePath": "/media/data/qadwu/floats/mechhand_640x220x229_float32_raw_640x220x229_float.cvol"
+            "volumePath": "/media/storage0/qadwu/floats/mechhand_640x220x229_float32_raw_640x220x229_float.cvol"
         },
         "SRN": {}
     }
