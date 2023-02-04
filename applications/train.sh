@@ -48,4 +48,5 @@ python volnet/train_volnet_lite.py \
    --logdir volnet/results/$1_hybrid/log \
    --modeldir volnet/results/$1_hybrid/model \
    --hdf5dir volnet/results/$1_hybrid/hdf5 \
-   --save_frequency 20
+   --save_frequency 20 \
+   --dims $2 $3 $4

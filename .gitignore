@@ -28,3 +28,4 @@ build/
 /applications/volnet/results*/
 *mc-cache.hdf5
 /applications/test-*.png
+/applications/archives
