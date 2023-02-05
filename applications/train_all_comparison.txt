@@ -1,31 +1,0 @@
-16 implicit functions loaded
-Load volume "/media/storage0/qadwu/floats/chameleon_1024x1024x1080_float32_raw_1024x1024x1080_float.cvol"
-Load feature 0
-Loaded
-Search pyrenderer in '/home/qadwu/Work/fV-SRN/bin'
-pyrenderer native library loaded
-Load settings, collect volumes and TFs
-Load settings from /home/qadwu/Work/fV-SRN/applications/config-files/instant-vnr/chameleon.json
-Initialize network
-Latent space memory: 57.4MiB
-# of network parameters: 15072577
-Create the dataloader
-Generate world-space dataset for 1 TFs, 1 timesteps, 1 ensembles, and 141557760 points.
-This gives rise to 141557760 samples, split over 270 batches with a batch size of 524288.
-In total, this requires 2.1GiB for the DataLoader
-0it [00:00, ?it/s]Read from cache "kernel_cache/992a58811d75cd8abe61adc62a5325b79f4dfc24.kernel"
-15 kernels loaded from cache
-1it [00:03,  3.49s/it]1it [00:03,  3.49s/it]
-Load TF 0, timestep 0, ensemble 0
-Densities: min=0.0, max=1.0, mean=0.3309105634689331
-Generate world-space dataset for 1 TFs, 1 timesteps, 1 ensembles, and 1 views of resolution 1024^2.
-This gives rise to 1048576 samples, split over 1048576 batches with a batch size of 1.
-In total, this requires 40.0MiB for the DataLoader
-0it [00:00, ?it/s]Render: : 0it [00:00, ?it/s]Render: : 1it [00:00,  1.81it/s]Render: : 1it [00:00,  1.81it/s]
-Load TF 0, timestep 0, ensemble 0
-Model directory: volnet/results/chameleon_hybrid/srn/model
-Log directory: volnet/results/chameleon_hybrid/srn/log
-HDF5 directory: volnet/results/chameleon_hybrid/srn/hdf5
-Current run: 00001
-{'settings': '/home/qadwu/Work/fV-SRN/applications/config-files/instant-vnr/chameleon.json', 'tf_directory': None, 'volume_filenames': None, 'ensembles': '0:1', 'time_keyframes': '0:1', 'time_train': '0:1', 'time_val': '0:1', 'train:mode': 'world', 'train:views': 8, 'train:resolution': 256, 'train:stepsize': 0.01, 'train:num_refine': 0, 'train:samples': 141557760, 'train:sampler': 'random', 'train:sampler_importance': 0.01, 'train:batchsize': 524288, 'train:disable_inversion_trick': False, 'val:copy_and_split': 0.2, 'val:mode': None, 'val:views': 8, 'val:resolution': 256, 'val:stepsize': 0.01, 'val:num_refine': 0, 'val:samples': 1024, 'val:sampler': 'random', 'val:sampler_importance': None, 'val:batchsize': None, 'vis:resolution': 1024, 'vis:stepsize': 0.005, 'vis:num_refine': None, 'sampler_cache': 'cache/', 'cache_images': False, 'rebuild_dataset': 101, 'rebuild_gridsize': 128, 'rebuild_samples_per_voxel': 8, 'rebuild_importance': None, 'rebuild_force_color': False, 'lossmode': 'density', 'l1': 1.0, 'l2': 0, 'dssim': 0, 'lpips': 0, 'absorption_weighting': 0.1, 'multiply_alpha': False, 'optimizer': 'Adam', 'lr': 0.01, 'epochs': 200, 'lr_gamma': 0.5, 'lr_step': 10, 'optim_params': '{}', 'outputmode': 'density:direct', 'layers': '64:64:64', 'activation': 'SnakeAlt:1', 'fouriercount': 30, 'fourierstd': -1.0, 'time_features': 0, 'ensemble_features': 0, 'volumetric_features_channels': 16, 'volumetric_features_resolution': 98, 'volumetric_features_std': 0.01, 'volumetric_features_time_dependent': False, 'use_direction': False, 'disable_direction_in_fourier_features': False, 'fourier_position_direction_split': -1, 'use_time_direct': False, 'num_time_fourier': 0, 'meta_network': None, 'meta_activation': 'ReLU', 'meta_pretrain': None, 'logdir': 'volnet/results/chameleon_hybrid/srn/log', 'modeldir': 'volnet/results/chameleon_hybrid/srn/model', 'hdf5dir': 'volnet/results/chameleon_hybrid/srn/hdf5', 'name': None, 'save_frequency': 20, 'profile': False, 'seed': 124, 'dims': [1024, 1024, 1080], 'inr': None, 'dryrun': False, 'CUDA_Device': 'Quadro RTX 8000'}
-  0%|          | 0/201 [00:00<?, ?it/s]

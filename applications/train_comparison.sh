@@ -28,7 +28,7 @@ python volnet/train_volnet_lite.py \
    --train:samples ${samples} \
    --train:sampler_importance 0.01 \
    --train:batchsize 64*64*128 \
-   --rebuild_dataset 101 \
+   --rebuild_dataset 0 \
    --val:copy_and_split \
    --outputmode density:direct \
    --lossmode density \
@@ -38,9 +38,9 @@ python volnet/train_volnet_lite.py \
    --fourierstd -1 \
    --volumetric_features_resolution ${latent_res} \
    --volumetric_features_channels   ${latent_fts} \
-   -l1 1 \
-   -lr 0.01 \
-   --lr_step 10 \
+   -l1 0.8 -l2 0.2 \
+   -lr 0.005 \
+   --lr_step 5 --lr_gamma 0.8 \
    -i 200 \
    --logdir   volnet/results/${data}_hybrid/srn/log   \
    --modeldir volnet/results/${data}_hybrid/srn/model \
@@ -55,12 +55,12 @@ python volnet/train_volnet_lite.py \
    --train:samples ${samples} \
    --train:sampler_importance 0.01 \
    --train:batchsize 64*64*128 \
-   --rebuild_dataset 101 \
+   --rebuild_dataset 0 \
    --val:copy_and_split \
    --lossmode density \
-   -l1 1 \
-   -lr 0.01 \
-   --lr_step 10 \
+   -l1 0.8 -l2 0.2 \
+   -lr 0.005 \
+   --lr_step 5 --lr_gamma 0.8 \
    -i 200 \
    --logdir   volnet/results/${data}_hybrid/inr/log   \
    --modeldir volnet/results/${data}_hybrid/inr/model \
