@@ -23,7 +23,6 @@
 #    --hdf5dir volnet/results/$1_256/hdf5 \
 #    --save_frequency 20
 
-
 # HYBRID TRAINING
 python volnet/train_volnet_lite.py \
    $PWD/config-files/instant-vnr/$1.json \
@@ -31,7 +30,7 @@ python volnet/train_volnet_lite.py \
    --train:samples 256**3 \
    --train:sampler_importance 0.01 \
    --train:batchsize 64*64*128 \
-   --rebuild_dataset 51 \
+   --rebuild_dataset 101 \
    --val:copy_and_split \
    --outputmode density:direct \
    --lossmode density \
@@ -39,14 +38,35 @@ python volnet/train_volnet_lite.py \
    --activation SnakeAlt:1 \
    --fouriercount 30 \
    --fourierstd -1 \
-   --volumetric_features_resolution 128 \
-   --volumetric_features_channels 16 \
+   --volumetric_features_resolution 96 \
+   --volumetric_features_channels 32 \
    -l1 1 \
    -lr 0.01 \
-   --lr_step 100 \
+   --lr_step 10 \
    -i 200 \
-   --logdir volnet/results/$1_hybrid/log \
+   --logdir   volnet/results/$1_hybrid/log_srn \
    --modeldir volnet/results/$1_hybrid/model \
-   --hdf5dir volnet/results/$1_hybrid/hdf5 \
+   --hdf5dir  volnet/results/$1_hybrid/hdf5 \
    --save_frequency 20 \
    --dims $2 $3 $4
+
+# INR TRAINING (do not rebuild dataset)
+python volnet/train_volnet_lite.py \
+   $PWD/config-files/instant-vnr/$1.json \
+   --train:mode world \
+   --train:samples 256**3 \
+   --train:sampler_importance 0.01 \
+   --train:batchsize 64*64*128 \
+   --rebuild_dataset 0 \
+   --val:copy_and_split \
+   --lossmode density \
+   -l1 1 \
+   -lr 0.01 \
+   --lr_step 10 \
+   -i 10 \
+   --logdir   volnet/results/test/log_inr \
+   --modeldir volnet/results/test/model \
+   --hdf5dir  volnet/results/test/hdf5 \
+   --save_frequency 20 \
+   --dims $2 $3 $4 \
+   --inr $5

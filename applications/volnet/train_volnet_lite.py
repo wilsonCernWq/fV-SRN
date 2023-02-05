@@ -37,9 +37,10 @@ from volnet.evaluation import EvaluateWorld, EvaluateScreen
 this_folder = os.path.split(__file__)[0]
 
 from volnet.inference_lite import MyLoadedModel
+from volnet.train_inr_helper import INR_TCNN, create_inr_scene
 
 
-def create_inr_json(fn, dims):
+def create_srn_scene(fn, dims):
     import bson
 
     with open(fn, 'rb') as f:
@@ -56,7 +57,7 @@ def create_inr_json(fn, dims):
                 "z": dims[2]
             }
         },
-          "parameters": {
+        "parameters": {
             "params_binary": volnet
         }
     })
@@ -95,18 +96,24 @@ def main():
     
     parser.add_argument('--dims', type=int, nargs=3, required=True, help='volume data dimensions')
 
+    parser.add_argument('--inr', type=str, default=None, help='use instant neural representation model')
+
+    parser.add_argument('--dryrun', action='store_true')
+
     opt = vars(parser.parse_args())
 
-    # Seeding
-    torch.manual_seed(opt['seed'])
+    # Seeding & Settings
     np.random.seed(opt['seed'])
+    torch.manual_seed(opt['seed'])
     torch.set_num_threads(4)
     # torch.backends.cudnn.benchmark = True
 
+    # Global Variables
     dtype = torch.float32
     device = torch.device("cuda")
-    opt['CUDA_Device'] = torch.cuda.get_device_name(2)
+    opt['CUDA_Device'] = torch.cuda.get_device_name(0)
 
+    # Profiling
     profile = opt['profile']
     if profile: raise Exception("profiling is not supported in this mode")
 
@@ -116,11 +123,30 @@ def main():
 
     # Network
     print("Initialize network")
-    network = SceneRepresentationNetwork(opt, input_data, dtype, device)
+    if opt['inr']:
+        with open(opt['inr']) as f:
+            import json
+            m = json.load(f)
+        network = INR_TCNN(m["encoding"], m["network"])
+        opt['inr_config'] = m
+    else:
+        network = SceneRepresentationNetwork(opt, input_data, dtype, device)
+
     network_output_mode = network.output_mode()
     network.to(device, dtype)
 
-    # dataloader
+    # Just compare the network size
+    def get_n_params(model):
+        pp=0
+        for p in list(model.parameters()):
+            nn = 1
+            for s in list(p.size()): nn = nn*s
+            pp += nn
+        return pp
+    print('# of network parameters:', get_n_params(network))
+    if opt['dryrun']: exit()
+
+    # Dataloader
     print("Create the dataloader")
     training_data = TrainingData(opt, dtype, device)
     training_data.create_dataset(input_data, network_output_mode, network.supports_mixed_latent_spaces())
@@ -271,11 +297,14 @@ def main():
 
     print("Done in", (time.time()-start_time), "seconds")
 
-    model_out_path = os.path.join(modeldir, "model_epoch_{}.pth".format(epoch))
-    ln = MyLoadedModel(model_out_path, hdf5file, force_config_file=opt['settings'])
-    print(f"Convert model {model_out_path}")
-
-    create_inr_json(hdf5file.replace('.hdf5', '.volnet'), opt['dims'])
+    basename = hdf5file.replace('.hdf5', '.volnet')
+    if opt['inr']:
+        create_inr_scene(basename, opt['dims'], network)
+    else:
+        model_out_path = os.path.join(modeldir, "model_epoch_{}.pth".format(epoch))
+        ln = MyLoadedModel(model_out_path, hdf5file, force_config_file=opt['settings'])
+        print(f"Convert model {model_out_path}")
+        create_srn_scene(basename, opt['dims'])
 
 
 if __name__ == '__main__':

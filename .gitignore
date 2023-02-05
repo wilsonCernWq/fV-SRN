@@ -29,3 +29,5 @@ build/
 *mc-cache.hdf5
 /applications/test-*.png
 /applications/archives
+/applications/volnet/train_inr_helper.py
+/applications/network.json
