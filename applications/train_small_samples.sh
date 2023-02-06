@@ -17,10 +17,11 @@ config=$5
 latent_res=$6
 latent_fts=$7
 layers=$8
+rebuild=$9
 
 samples=256**3
 config=/home/qadwu/Work/instant-vnr-cuda/data/threshold-compress/compress-200000/${config}
-outdir=/mnt/scratch/ssd/qadwu/fvsrn
+outdir=/mnt/scratch/ssd/qadwu/fvsrn/run02
 
 # HYBRID TRAINING
 python volnet/train_volnet_lite.py \
@@ -29,7 +30,7 @@ python volnet/train_volnet_lite.py \
    --train:samples ${samples} \
    --train:sampler_importance 0.01 \
    --train:batchsize 64*64*128 \
-   --rebuild_dataset 0 \
+   --rebuild_dataset ${rebuild} \
    --val:copy_and_split \
    --outputmode density:direct \
    --lossmode density \
@@ -40,8 +41,8 @@ python volnet/train_volnet_lite.py \
    --volumetric_features_resolution ${latent_res} \
    --volumetric_features_channels   ${latent_fts} \
    -l1 1 \
-   -lr 0.005 \
-   --lr_step 20 --lr_gamma 0.5 \
+   -lr 0.01 \
+   --lr_step 120 \
    -i 200 \
    --logdir   ${outdir}/${data}_hybrid/srn/log   \
    --modeldir ${outdir}/${data}_hybrid/srn/model \
@@ -56,12 +57,12 @@ python volnet/train_volnet_lite.py \
    --train:samples ${samples} \
    --train:sampler_importance 0.01 \
    --train:batchsize 64*64*128 \
-   --rebuild_dataset 0 \
+   --rebuild_dataset ${rebuild} \
    --val:copy_and_split \
    --lossmode density \
    -l1 1 \
    -lr 0.005 \
-   --lr_step 20 --lr_gamma 0.5 \
+   --lr_step 10 --lr_gamma 0.8 \
    -i 200 \
    --logdir   ${outdir}/${data}_hybrid/inr/log   \
    --modeldir ${outdir}/${data}_hybrid/inr/model \
