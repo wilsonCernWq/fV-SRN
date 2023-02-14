@@ -36,7 +36,7 @@ python volnet/train_volnet_lite.py \
    --lossmode density \
    --layers ${layers} \
    --activation SnakeAlt:1 \
-   --fouriercount 30 \
+   --fouriercount 14 \
    --fourierstd -1 \
    --volumetric_features_resolution ${latent_res} \
    --volumetric_features_channels   ${latent_fts} \
