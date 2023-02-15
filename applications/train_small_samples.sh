@@ -21,7 +21,7 @@ rebuild=$9
 
 samples=256**3
 config=/home/qadwu/Work/instant-vnr-cuda/data/threshold-compress/compress-200000/${config}
-outdir=/mnt/scratch/ssd/qadwu/fvsrn/run02
+outdir=/mnt/scratch/ssd/qadwu/fvsrn/run03-rebuild
 
 # HYBRID TRAINING
 python volnet/train_volnet_lite.py \
@@ -36,7 +36,7 @@ python volnet/train_volnet_lite.py \
    --lossmode density \
    --layers ${layers} \
    --activation SnakeAlt:1 \
-   --fouriercount 14 \
+   --fouriercount 30 \
    --fourierstd -1 \
    --volumetric_features_resolution ${latent_res} \
    --volumetric_features_channels   ${latent_fts} \
