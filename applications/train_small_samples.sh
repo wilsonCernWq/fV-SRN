@@ -21,7 +21,7 @@ rebuild=$9
 
 samples=256**3
 config=/home/qadwu/Work/instant-vnr-cuda/data/threshold-compress/compress-200000/${config}
-outdir=/mnt/scratch/ssd/qadwu/fvsrn/run03-rebuild
+outdir=run03-rebuild
 
 # HYBRID TRAINING
 python volnet/train_volnet_lite.py \
